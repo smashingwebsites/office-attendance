@@ -1,60 +1,88 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import { db } from '@/firebase'
-import { onMounted } from 'vue'
-import { onSnapshot, collection } from 'firebase/firestore'
+import {db} from '@/firebase'
+import {ref} from 'vue'
+import {onSnapshot, collection, query, where} from 'firebase/firestore'
+import WeekDay from '@/components/week/day.vue'
 
-onMounted(async () => {
-  console.log('is mounted')
-  onSnapshot(collection(db, 'users'), (querySnapshot) => {
+// https://github.com/commenthol/date-holidays
 
-    querySnapshot.forEach((doc) => {
-      console.log(doc.data())
-    })
+const usersRef = collection(db, 'users')
+const daysRef = collection(db, 'days')
 
+const weekdays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
+
+const weekEntries = ref([])
+
+
+// Todo: If not route parameter - use current day as start
+const today = new Date("2023-06-06T00:00:00.000Z");
+//const today = new Date();
+
+const startOfWeek = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() - today.getDay() + 1
+);
+
+const endOfWeek = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() - today.getDay() + 5);
+
+// Calculate workweek dates
+const workweek = ref([])
+
+for (let i = 0; i < 5; i++) {
+  const date = new Date(startOfWeek);
+  date.setDate(startOfWeek.getDate() + i);
+  workweek.value.push({id: "day" + i, date: date.toLocaleDateString(), name: weekdays[i]});
+}
+
+const q = query(daysRef, where('date', '>=', startOfWeek), where('date', '<=', endOfWeek))
+
+onSnapshot(q, (querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+
+    const entry = doc.data();
+
+    // Convert date to JS date object and format it
+    const date = new Date(entry.date.seconds * 1000); // Convert seconds to milliseconds
+
+    // Reformat date
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    entry.date = `${day}/${month}/${year}`; // Format date as dd/mm/yyyy
+
+
+    // Add entry to matching workweek day
+    workweek.value.map((day) => {
+
+      if (day.date === entry.date) {
+        day.users = entry.users
+      }
+
+      return {
+        ...day,
+      }
+    });
   })
 })
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125"/>
-
-    <div class="wrapper">
-      <HelloWorld msg="You fucking did it!"/>
-    </div>
-  </header>
-
   <main>
-
+    <WeekDay v-for="day in workweek" :day="day"/>
   </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+main {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-evenly;
 }
 </style>
