@@ -1,11 +1,12 @@
 <script setup>
 // Logo
-
-
 </script>
 <template>
-  <img src="" alt="Logo">
+  <img src="@/assets/logo.svg" alt="Logo">
 </template>
 <style scoped>
-
+img {
+  width: 100px;
+  height: auto;
+}
 </style>

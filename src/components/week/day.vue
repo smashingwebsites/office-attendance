@@ -18,6 +18,7 @@ defineProps(['day'])
   display: flex;
   flex-direction: column;
   gap: .5rem;
+  width: 100%;
 
   .day__date {
     font-weight: bold;

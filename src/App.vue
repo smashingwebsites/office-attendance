@@ -3,6 +3,8 @@ import {db} from '@/firebase'
 import {ref} from 'vue'
 import {onSnapshot, collection, query, where} from 'firebase/firestore'
 import WeekDay from '@/components/week/day.vue'
+import HeaderWrapper from '@/components/header/wrapper.vue'
+import HeaderWeek from '@/components/header/week.vue'
 
 // https://github.com/commenthol/date-holidays
 
@@ -71,18 +73,25 @@ onSnapshot(q, (querySnapshot) => {
 </script>
 
 <template>
+  <HeaderWrapper>
+    <HeaderWeek/>
+  </HeaderWrapper>
   <main>
-    <WeekDay v-for="day in workweek" :day="day"/>
+    <div class="container">
+      <div class="week">
+        <WeekDay v-for="day in workweek" :day="day"/>
+      </div>
+    </div>
   </main>
 </template>
 
 <style scoped>
-main {
+.week {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   gap: 1rem;
   align-items: flex-start;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 </style>
