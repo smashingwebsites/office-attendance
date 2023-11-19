@@ -13,7 +13,6 @@ import HeaderNavigation from '@/components/header/navigation.vue'
 </template>
 <style scoped>
 header {
-  background-color: #fff3d5;
   margin-bottom: 3rem;
   padding-block: 2rem;
 }

@@ -7,26 +7,39 @@
   <nav>
     <ul>
       <li>Monat</li>
-      <li>Woche</li>
+      <li class="active">Woche</li>
       <li>Stats</li>
       <li>Profil</li>
       <li>Logout</li>
     </ul>
   </nav>
 </template>
-<style scoped>
+<style scoped >
+nav {
+  font-size: 1.2rem;
+}
+
 nav ul {
   display: flex;
   justify-content: space-between;
   list-style: none;
   padding: 0;
   margin: 0;
-  gap: 1rem;
+  gap: .5rem;
+}
 
-  li {
-    border: 2px solid darkgreen;
-    padding: .5rem;
-    border-radius: .5rem;
-  }
+nav ul li {
+  padding: .5rem 1rem;
+  border-radius: var(--border-radius);
+  background: transparent;
+  transition: all .2s ease-in-out;
+}
+
+nav ul li:hover, nav ul li:focus {
+  background: var(--clr-grey);
+}
+
+nav ul li.active {
+  background: var(--clr-hightlight);
 }
 </style>

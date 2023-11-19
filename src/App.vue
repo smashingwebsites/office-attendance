@@ -40,8 +40,10 @@ for (let i = 0; i < 5; i++) {
   workweek.value.push({id: "day" + i, date: date.toLocaleDateString(), name: weekdays[i]});
 }
 
+// Query for firebase
 const q = query(daysRef, where('date', '>=', startOfWeek), where('date', '<=', endOfWeek))
 
+// Listen for changes
 onSnapshot(q, (querySnapshot) => {
   querySnapshot.forEach((doc) => {
 

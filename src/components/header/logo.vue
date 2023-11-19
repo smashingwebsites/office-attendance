@@ -6,7 +6,7 @@
 </template>
 <style scoped>
 img {
-  width: 100px;
+  width: 150px;
   height: auto;
 }
 </style>
