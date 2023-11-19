@@ -1,10 +1,23 @@
 <script setup>
 import User from '@/components/week/user.vue'
+import {computed} from "vue";
 
-defineProps(['day'])
+const props = defineProps(['day'])
+
+const dayStatusClass = computed(() => {
+  if (props.day.users) {
+    if (props.day.users.length === 0) {
+      return 'state--empty'
+    } else if (props.day.users.length < 2) {
+      return 'state--partially'
+    } else {
+      return 'state--filled'
+    }
+  }
+})
 </script>
 <template>
-  <div class="day">
+  <div class="day" :class="dayStatusClass">
     <div class="day__date">
       {{ day.date }}
     </div>
