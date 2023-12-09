@@ -1,7 +1,7 @@
-<script setup>
-import {db} from '@/firebase'
-import {ref} from 'vue'
-import {onSnapshot, collection, query, where} from 'firebase/firestore'
+<script setup async>
+import { db } from '@/firebase'
+import { ref } from 'vue'
+import { onSnapshot, collection, query, where, getDocs } from 'firebase/firestore'
 import WeekDay from '@/components/week/day.vue'
 import HeaderWrapper from '@/components/header/wrapper.vue'
 import HeaderWeek from '@/components/header/week.vue'
@@ -10,10 +10,9 @@ import HeaderWeek from '@/components/header/week.vue'
 
 const usersRef = collection(db, 'users')
 const daysRef = collection(db, 'days')
+const mandatoryDaysRef = collection(db, 'mandatory-days')
 
 const weekdays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
-
-const weekEntries = ref([])
 
 
 // Todo: If not route parameter - use current day as start
@@ -21,27 +20,53 @@ const today = new Date("2023-06-06T00:00:00.000Z");
 //const today = new Date();
 
 const startOfWeek = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() - today.getDay() + 1
+  today.getFullYear(),
+  today.getMonth(),
+  today.getDate() - today.getDay() + 1
 );
 
 const endOfWeek = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() - today.getDay() + 5);
+  today.getFullYear(),
+  today.getMonth(),
+  today.getDate() - today.getDay() + 5);
 
 // Calculate workweek dates
 const workweek = ref([])
+const date = new Date(startOfWeek);
 
 for (let i = 0; i < 5; i++) {
-  const date = new Date(startOfWeek);
   date.setDate(startOfWeek.getDate() + i);
-  workweek.value.push({id: "day" + i, date: date.toLocaleDateString(), name: weekdays[i]});
+  workweek.value.push({ id: "day" + i, date: date.toLocaleDateString(), name: weekdays[i]});
 }
 
-// Query for firebase
+// Query days from firebase
 const q = query(daysRef, where('date', '>=', startOfWeek), where('date', '<=', endOfWeek))
+
+const queryMandatoryDays = query(mandatoryDaysRef, where('date', '>=', startOfWeek), where('date', '<=', endOfWeek))
+
+// get mandatory days from firebase
+getDocs(queryMandatoryDays)
+  .then((querySnapshot) => {
+    querySnapshot.docs.forEach((doc) => {
+      const dateEntry = new Date(doc.data().date.seconds * 1000); // Convert seconds to milliseconds
+
+      // Add entry to matching workweek day
+      workweek.value.map((day) => {
+
+        if (day.date === dateEntry.toLocaleDateString()) {
+          day.mandatory = true;
+        }
+
+        return {
+          ...day,
+        }
+      });
+    });
+  })
+  .catch((error) => {
+    console.error("Error getting documents: ", error);
+  });
+
 
 // Listen for changes
 onSnapshot(q, (querySnapshot) => {
@@ -76,12 +101,15 @@ onSnapshot(q, (querySnapshot) => {
 
 <template>
   <HeaderWrapper>
-    <HeaderWeek/>
+    <HeaderWeek />
   </HeaderWrapper>
   <main>
     <div class="container">
+      <pre>
+        {{ mandatoryDays }}
+      </pre>
       <div class="week">
-        <WeekDay v-for="day in workweek" :day="day"/>
+        <WeekDay v-for="day in workweek" :day="day" />
       </div>
     </div>
   </main>
