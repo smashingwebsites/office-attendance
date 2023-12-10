@@ -73,21 +73,12 @@ onSnapshot(q, (querySnapshot) => {
   querySnapshot.forEach((doc) => {
 
     const entry = doc.data();
-
-    // Convert date to JS date object and format it
-    const date = new Date(entry.date.seconds * 1000); // Convert seconds to milliseconds
-
-    // Reformat date
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    entry.date = `${day}/${month}/${year}`; // Format date as dd/mm/yyyy
-
+    const entryDate = new Date(entry.date.seconds * 1000); // Convert seconds to milliseconds
 
     // Add entry to matching workweek day
     workweek.value.map((day) => {
 
-      if (day.date === entry.date) {
+      if (day.date === entryDate.toLocaleDateString()) {
         day.users = entry.users
       }
 
@@ -105,9 +96,6 @@ onSnapshot(q, (querySnapshot) => {
   </HeaderWrapper>
   <main>
     <div class="container">
-      <pre>
-        {{ mandatoryDays }}
-      </pre>
       <div class="week">
         <WeekDay v-for="day in workweek" :day="day" />
       </div>
