@@ -22,7 +22,7 @@ const today = new Date("2023-06-06T00:00:00.000Z");
 const startOfWeek = new Date(
   today.getFullYear(),
   today.getMonth(),
-  today.getDate() - today.getDay() + 1
+  today.getDate() - today.getDay() + 1,
 );
 
 const endOfWeek = new Date(
@@ -36,40 +36,37 @@ const date = new Date(startOfWeek);
 
 for (let i = 0; i < 5; i++) {
   date.setDate(startOfWeek.getDate() + i);
-  workweek.value.push({ id: "day" + i, date: date.toLocaleDateString(), name: weekdays[i]});
+  workweek.value.push({ id: "day" + i, date: date.toLocaleDateString(), name: weekdays[i], timestamp: date.toString() });
 }
 
 // Query days from firebase
-const q = query(daysRef, where('date', '>=', startOfWeek), where('date', '<=', endOfWeek))
+const queryUsers = query(daysRef, where('date', '>=', startOfWeek), where('date', '<=', endOfWeek))
 
 const queryMandatoryDays = query(mandatoryDaysRef, where('date', '>=', startOfWeek), where('date', '<=', endOfWeek))
 
-// get mandatory days from firebase
-getDocs(queryMandatoryDays)
-  .then((querySnapshot) => {
-    querySnapshot.docs.forEach((doc) => {
-      const dateEntry = new Date(doc.data().date.seconds * 1000); // Convert seconds to milliseconds
+onSnapshot(queryMandatoryDays, (querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+    const dateEntry = new Date(doc.data().date.seconds * 1000); // Convert seconds to milliseconds
 
-      // Add entry to matching workweek day
-      workweek.value.map((day) => {
+    // Add entry to matching workweek day
+    workweek.value.map((day) => {
 
-        if (day.date === dateEntry.toLocaleDateString()) {
-          day.mandatory = true;
-        }
+      const dayDateObj = new Date(day.timestamp);
 
-        return {
-          ...day,
-        }
-      });
+      if (dayDateObj.toDateString() === dateEntry.toDateString()) {
+        day.mandatory = true;
+      }
+
+      return {
+        ...day,
+      }
     });
-  })
-  .catch((error) => {
-    console.error("Error getting documents: ", error);
   });
+})
 
 
 // Listen for changes
-onSnapshot(q, (querySnapshot) => {
+onSnapshot(queryUsers, (querySnapshot) => {
   querySnapshot.forEach((doc) => {
 
     const entry = doc.data();

@@ -1,17 +1,22 @@
 <script setup>
 import User from '@/components/week/user.vue'
-import {computed} from "vue";
+import { computed } from "vue";
 
 const props = defineProps(['day'])
 
 const dayStatusClass = computed(() => {
-  if (props.day.users) {
-    if (props.day.users.length === 0) {
+  if (props.day.mandatory) {
+    if (props.day.users) {
+      if (props.day.users.length === 0) {
+        return 'state--empty'
+      } else if (props.day.users.length < 2) {
+        return 'state--partially'
+      } else {
+        return 'state--filled'
+      }
+    }
+    else {
       return 'state--empty'
-    } else if (props.day.users.length < 2) {
-      return 'state--partially'
-    } else {
-      return 'state--filled'
     }
   }
 })
@@ -22,7 +27,7 @@ const dayStatusClass = computed(() => {
       {{ day.date }}
     </div>
     <div v-if="day.users" v-for="user in day.users">
-      <User :user="user"/>
+      <User :user="user" />
     </div>
   </div>
 </template>
@@ -50,6 +55,7 @@ const dayStatusClass = computed(() => {
 .day__date {
   font-weight: bold;
   border: 2px solid var(--clr-grey);
+  background-color: var(--clr-state);
   padding: .5rem;
   text-align: center;
   border-radius: var(--border-radius);
