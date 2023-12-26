@@ -16,7 +16,7 @@
 </template>
 <style scoped >
 nav {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 nav ul {
@@ -41,13 +41,5 @@ nav ul li:hover, nav ul li:focus {
 
 nav ul li.active {
   background: var(--clr-hightlight);
-  box-shadow:
-  0px 1.4px 2.2px rgba(0, 0, 0, 0.02),
-  0px 3.3px 5.3px rgba(0, 0, 0, 0.028),
-  0px 6.3px 10px rgba(0, 0, 0, 0.035),
-  0px 11.2px 17.9px rgba(0, 0, 0, 0.042),
-  0px 20.9px 33.4px rgba(0, 0, 0, 0.05),
-  0px 50px 80px rgba(0, 0, 0, 0.07)
-;
 }
 </style>
