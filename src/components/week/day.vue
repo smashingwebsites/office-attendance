@@ -37,7 +37,6 @@ const dayStatusClass = computed(() => {
   flex-direction: column;
   gap: .25rem;
   width: 100%;
-  --_radius-factor: 1.5;
 }
 
 .day.state--empty {
@@ -95,7 +94,7 @@ const dayStatusClass = computed(() => {
   background-image: var(--_clr-state-gradient);
   padding: .25rem;
   text-align: center;
-  border-radius: calc(var(--border-radius) * var(--_radius-factor));
+  border-radius: var(--border-radius-lg);
   font-size: 1.1rem;
   color: var(--_clr-font, var(--clr-black));
   position: relative;
@@ -103,6 +102,6 @@ const dayStatusClass = computed(() => {
 
 /* if day has users */
 .day__date:has(+ div) {
-  border-radius: calc(var(--border-radius) * var(--_radius-factor)) calc(var(--border-radius) * var(--_radius-factor)) var(--border-radius) var(--border-radius);
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) var(--border-radius) var(--border-radius);
 }
 </style>
