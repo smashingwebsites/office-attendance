@@ -1,25 +1,17 @@
 <script setup>
 import {useDateOfWeek} from "@/composables/useDateOfWeek";
-import {inject} from 'vue'
+import {watch, ref, computed, onUpdated} from 'vue'
+import {store} from "@/store";
 
-const today = inject('today');
+const startOfWeek = computed(() => useDateOfWeek(store.currentDate, 1).toLocaleDateString())
+const endOfWeek = computed(() => useDateOfWeek(store.currentDate, 5).toDateString())
 
-// You can alter the `today` value like this:
-//today.value = new Date();
-
-const startOfWeek = useDateOfWeek(today.value, 1)
-const endOfWeek = useDateOfWeek(today.value, 5)
-
-function nextWeek() {
-  today.value = useDateOfWeek(today.value, 7)
-  console.log(today.value)
-}
 </script>
 <template>
   <div class="nav">
-    <div class="nav__arrow nav__arrow--prev">&larr;</div>
-    <div class="nav__date">{{startOfWeek.toLocaleDateString()}} - {{endOfWeek.toDateString()}}</div>
-    <div class="nav__arrow nav__arrow--next" @click="nextWeek">&rarr;</div>
+    <div class="nav__arrow nav__arrow--prev" @click="store.prevWeek()">&larr;</div>
+    <div class="nav__date">{{ startOfWeek }} - {{ endOfWeek }}</div>
+    <div class="nav__arrow nav__arrow--next" @click="store.nextWeek()">&rarr;</div>
   </div>
 </template>
 

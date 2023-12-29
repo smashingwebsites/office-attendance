@@ -3,10 +3,9 @@
 import WeekDay from "@/components/week/day.vue";
 import {useDateOfWeek} from "@/composables/useDateOfWeek";
 import {db} from '@/firebase'
-import {ref, reactive, onMounted} from 'vue'
+import {ref, onUpdated, onMounted, computed} from 'vue'
 import {onSnapshot, collection, query, where} from 'firebase/firestore'
-
-const props = defineProps(['date'])
+import {store} from "@/store";
 
 // Firebase references
 const usersRef = collection(db, 'users')
@@ -15,22 +14,21 @@ const mandatoryDaysRef = collection(db, 'mandatory-days')
 
 const weekdays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
 
-
-const startOfWeek = useDateOfWeek(props.date, 1)
-const endOfWeek = useDateOfWeek(props.date, 5)
+const startOfWeek = computed(() => useDateOfWeek(store.currentDate, 1))
+const endOfWeek = computed(() => useDateOfWeek(store.currentDate, 5))
 
 // Calculate workweek dates
 const workweek = ref([])
-const date = new Date(startOfWeek);
+const date = new Date(startOfWeek.value);
 
 for (let i = 0; i < 5; i++) {
-  date.setDate(startOfWeek.getDate() + i);
+  date.setDate(startOfWeek.value.getDate() + i);
   workweek.value.push({id: "day" + i, date: date.toLocaleDateString(), name: weekdays[i], timestamp: date.toString()});
 }
 
 // Queries for firebase
-const queryUsers = query(daysRef, where('date', '>=', startOfWeek), where('date', '<=', endOfWeek))
-const queryMandatoryDays = query(mandatoryDaysRef, where('date', '>=', startOfWeek), where('date', '<=', endOfWeek))
+const queryUsers = query(daysRef, where('date', '>=', startOfWeek.value), where('date', '<=', endOfWeek.value))
+const queryMandatoryDays = query(mandatoryDaysRef, where('date', '>=', startOfWeek.value), where('date', '<=', endOfWeek.value))
 
 onMounted(async () => {
   // Mandatory Days
