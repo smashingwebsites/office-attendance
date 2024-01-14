@@ -14,7 +14,6 @@ import {store} from "@/store";
   </HeaderWrapper>
   <main>
     <div class="container">
-      <div>today: {{ store.currentDate }}</div>
       <Week />
     </div>
   </main>
