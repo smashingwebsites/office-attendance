@@ -2,10 +2,7 @@
 import Week from '@/components/week/week.vue'
 import HeaderWrapper from '@/components/header/wrapper.vue'
 import HeaderWeek from '@/components/header/date.vue'
-import {store} from "@/store";
 // https://github.com/commenthol/date-holidays
-
-
 </script>
 
 <template>
