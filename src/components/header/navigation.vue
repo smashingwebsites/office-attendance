@@ -6,15 +6,15 @@
 <template>
   <nav>
     <ul>
-      <li>Monat</li>
-      <li class="active">Woche</li>
-      <li>Stats</li>
-      <li>Profil</li>
-      <li>Logout</li>
+      <li><router-link to="/month">Monat</router-link></li>
+      <li><router-link to="/">Woche</router-link></li>
+      <li><router-link to="/stats">Stats</router-link></li>
+      <li><router-link to="/account">Account</router-link></li>
+      <li><a href="#">Logout</a></li>
     </ul>
   </nav>
 </template>
-<style scoped >
+<style scoped>
 nav {
   font-size: 1rem;
 }
@@ -28,18 +28,21 @@ nav ul {
   gap: .5rem;
 }
 
-nav ul li {
+nav ul li a {
   padding: .5rem 1rem;
   border-radius: var(--border-radius);
   background: transparent;
   transition: all .2s ease-in-out;
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
-nav ul li:hover, nav ul li:focus {
+nav ul li a:hover, nav ul li a:focus {
   background: var(--clr-grey);
 }
 
-nav ul li.active {
+nav ul li a.router-link-active {
   background: var(--clr-hightlight);
 }
 </style>

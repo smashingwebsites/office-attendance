@@ -1,17 +1,29 @@
 <script setup>
-import Week from '@/components/week/week.vue'
-import HeaderWrapper from '@/components/header/wrapper.vue'
-import HeaderWeek from '@/components/header/date.vue'
+
+import Header from '@/components/header/wrapper.vue'
+
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+const additionalHeaderComponent = computed(() => {
+  if (route.meta.additionalHeaderComponent) {
+    return route.meta.additionalHeaderComponent
+  }
+  return null
+})
+
 // https://github.com/commenthol/date-holidays
 </script>
 
 <template>
-  <HeaderWrapper>
-    <HeaderWeek/>
-  </HeaderWrapper>
+  <Header>
+    <component :is="additionalHeaderComponent" />
+  </Header>
   <main>
     <div class="container">
-      <Week />
+      <router-view/>
     </div>
   </main>
 </template>
