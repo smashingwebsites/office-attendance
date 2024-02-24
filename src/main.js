@@ -18,7 +18,13 @@ const routes = [
         meta: {additionalHeaderComponent: HeaderWeek}
     },
     {
-        path: '/month',
+        path: '/week/:year/:nr',
+        component: week,
+        name: 'week',
+        meta: {additionalHeaderComponent: HeaderWeek}
+    },
+    {
+        path: '/month/:year/:nr',
         component: month,
         meta: {additionalHeaderComponent: HeaderMonth}
     },
