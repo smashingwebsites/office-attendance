@@ -14,19 +14,26 @@ import HeaderMonth from '@/components/header/date.vue'
 const routes = [
     {
         path: '/',
-        component: week,
-        meta: {additionalHeaderComponent: HeaderWeek}
+        components: {
+            default: week,
+            dateNavigation: HeaderWeek
+        },
     },
     {
         path: '/week/:year/:nr',
         component: week,
         name: 'week',
-        meta: {additionalHeaderComponent: HeaderWeek}
+        components: {
+            default: week,
+            dateNavigation: HeaderWeek
+        },
     },
     {
         path: '/month/:year/:nr',
-        component: month,
-        meta: {additionalHeaderComponent: HeaderMonth}
+        components: {
+            default: month,
+            dateNavigation: HeaderMonth
+        },
     },
     {path: '/account', component: account},
     {path: '/stats', component: stats},

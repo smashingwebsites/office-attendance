@@ -49,9 +49,6 @@ const currentWeek = computed(() => getWeekNumber(new Date(store.currentDate)))
 
 </script>
 <template>
-  <div>
-    <h1>Week {{ currentWeek }}</h1>
-  </div>
   <div class="nav">
     <div class="nav__arrow nav__arrow--prev" @click="store.prevWeek()">&larr;</div>
     <div class="nav__date">{{ startOfWeek }} - {{ endOfWeek }}</div>
