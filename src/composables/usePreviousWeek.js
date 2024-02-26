@@ -1,26 +1,25 @@
 /**
- * Calculates the next week number and year based on the current date.
+ * Calculates the previous week number and year based on the current date.
  * @param {Date} date - The current date.
- * @return {object} - Object containing the next week number and year.
+ * @return {object} - Object containing the previous week number and year.
  */
 import {useNumberOfWeeks} from "@/composables/useNumberOfWeeks";
 
-export function useNextWeek(date) {
+export function usePreviousWeek(date) {
     const year = date.getFullYear();
-    const totalWeeks = useNumberOfWeeks(year);
-    const weekNumber = getWeekNumber(date);
+    let weekNumber = getWeekNumber(date);
     let intWeekNumber = parseInt(weekNumber, 10);
-    let nextWeekNumber;
-    let nextYear = year;
+    let prevWeekNumber;
+    let prevYear = year;
 
-    if (weekNumber >= totalWeeks) {
-        nextWeekNumber = 1;
-        nextYear++;
+    if (weekNumber <= 1) {
+        prevYear--;
+        prevWeekNumber = useNumberOfWeeks(prevYear);
     } else {
-        nextWeekNumber = intWeekNumber + 1;
+        prevWeekNumber = intWeekNumber - 1;
     }
 
-    return {week: nextWeekNumber, year: nextYear};
+    return {week: prevWeekNumber, year: prevYear};
 }
 
 function getWeekNumber(d) {

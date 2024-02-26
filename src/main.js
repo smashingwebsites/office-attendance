@@ -20,7 +20,7 @@ const routes = [
         },
     },
     {
-        path: '/week/:year/:nr',
+        path: '/week/:year/:week',
         component: week,
         name: 'week',
         components: {
@@ -29,7 +29,7 @@ const routes = [
         },
     },
     {
-        path: '/month/:year/:nr',
+        path: '/month/:year/:month',
         components: {
             default: month,
             dateNavigation: HeaderMonth

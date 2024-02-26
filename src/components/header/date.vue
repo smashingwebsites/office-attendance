@@ -4,55 +4,38 @@ import {watch, ref, computed, onUpdated} from 'vue'
 import {store} from "@/store";
 import {useRouter, useRoute} from 'vue-router'
 import {useNextWeek} from "@/composables/useNextWeek";
+import {usePreviousWeek} from "@/composables/usePreviousWeek";
 
 const route = useRoute()
-console.log(route.params)
-console.log("-----------------")
-
-const year = route.params.year;
-const weekNumber = route.params.nr;
 
 const startOfWeek = computed(() => useDateOfWeek(store.currentDate, 1).toLocaleDateString())
 const endOfWeek = computed(() => useDateOfWeek(store.currentDate, 5).toDateString())
 
+const nextWeek = computed(() => useNextWeek(store.currentDate))
+const prevWeek = computed(() => usePreviousWeek(store.currentDate))
 
-// Function to get the week number from a Date object
-function getWeekNumber(d) {
-  d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+
+// Function to get the start date of a week.
+function getStartDateOfWeek(weekNumber, year) {
+  const date = new Date(year, 0, 2 + (weekNumber - 1) * 7);
+  const weekStart = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
+
+  return new Date(date.setDate(weekStart));;
 }
 
-// todo: put in useDateOfWeek
-// todo: vlt gleich einfacheres datum zurück geben
-const getWeekDates = (weekNumber, year) => {
-  const firstDayOfYear = new Date(year, 0, 1 + (weekNumber - 1) * 7);
-  const weekStartDayOffset = firstDayOfYear.getDate() - firstDayOfYear.getDay() + 1;
-  const startDate = new Date(firstDayOfYear.setDate(weekStartDayOffset));
-  const weekEndDayOffset = firstDayOfYear.getDate() - firstDayOfYear.getDay() + 7;
-  const endDate = new Date(firstDayOfYear.setDate(weekEndDayOffset));
-
-  return {startDate, endDate};
+function setCurrentDateInStore() {
+  store.currentDate = new Date(getStartDateOfWeek(route.params.week, route.params.year));
 }
 
-
-const {week: nextWeekNumber} = useNextWeek(weekNumber, year);
-const {year: nextWeekYear} = useNextWeek(weekNumber, year);
-
-
-// We create a computed property currentWeek which returns the week number of store.currentDate
-const currentWeek = computed(() => getWeekNumber(new Date(store.currentDate)))
-
-// Now we create a computed property nextWeek which returns the week number after currentWeek
-//const nextWeek = computed(() => currentWeek.value + 1)
-
+watch(() => route.params.week, setCurrentDateInStore, {immediate: true});
 </script>
 <template>
   <div class="nav">
-    <div class="nav__arrow nav__arrow--prev" @click="store.prevWeek()">&larr;</div>
+    <router-link :to="{ name: 'week', params: { week: prevWeek.week, year: prevWeek.year }}"
+                 class="nav__arrow nav__arrow--prev">&larr;
+    </router-link>
     <div class="nav__date">{{ startOfWeek }} - {{ endOfWeek }}</div>
-    <router-link :to="{ name: 'week', params: { nr: nextWeekNumber, year: nextWeekYear }}"
+    <router-link :to="{ name: 'week', params: { week: nextWeek.week, year: nextWeek.year }}"
                  class="nav__arrow nav__arrow--next">&rarr;
     </router-link>
   </div>
@@ -86,6 +69,8 @@ const currentWeek = computed(() => getWeekNumber(new Date(store.currentDate)))
   justify-content: center;
   transition: background-color var(--transition-duration) var(--transition-timing);
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 
 .nav .nav__arrow:hover {

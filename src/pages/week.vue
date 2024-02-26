@@ -64,7 +64,7 @@ watch(() => store.currentDate, getDaysInWeek, {immediate: true});
 </script>
 
 <template>
-  {{ route.params.nr}}
+  {{ route.params.week}}
   <div class="week">
     <WeekDay v-for="day in workweek" :day="day"/>
   </div>
