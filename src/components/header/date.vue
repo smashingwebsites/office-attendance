@@ -2,7 +2,7 @@
 import {useDateOfWeek} from "@/composables/useDateOfWeek";
 import {watch, ref, computed, onUpdated} from 'vue'
 import {store} from "@/store";
-import {useRouter, useRoute} from 'vue-router'
+import {useRoute} from 'vue-router'
 import {useNextWeek} from "@/composables/useNextWeek";
 import {usePreviousWeek} from "@/composables/usePreviousWeek";
 
@@ -20,7 +20,7 @@ function getStartDateOfWeek(weekNumber, year) {
   const date = new Date(year, 0, 2 + (weekNumber - 1) * 7);
   const weekStart = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
 
-  return new Date(date.setDate(weekStart));;
+  return new Date(date.setDate(weekStart));
 }
 
 function setCurrentDateInStore() {

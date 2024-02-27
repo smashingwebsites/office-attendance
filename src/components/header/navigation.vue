@@ -1,13 +1,17 @@
 <script setup>
-// Logo
+import {computed} from "vue";
+import {store} from "@/store";
+import {useWeekNumber} from "@/composables/useWeekNumber";
 
+const currentWeek = computed(() => useWeekNumber(store.currentDate))
+const currentYear = computed(() => store.currentDate.getFullYear())
 
 </script>
 <template>
   <nav>
     <ul>
       <li><router-link to="/month">Monat</router-link></li>
-      <li><router-link to="/">Woche</router-link></li>
+      <li><router-link :to="{ name: 'week', params: { week: currentWeek, year: currentYear }}">Woche</router-link></li>
       <li><router-link to="/stats">Stats</router-link></li>
       <li><router-link to="/account">Account</router-link></li>
       <li><a href="#">Logout</a></li>

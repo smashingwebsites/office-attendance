@@ -5,7 +5,6 @@ import {db} from '@/firebase'
 import {ref, onUpdated, onMounted, computed, watch} from 'vue'
 import {getDocs, collection, query, where} from 'firebase/firestore'
 import {store} from "@/store";
-import {useRouter, useRoute} from 'vue-router'
 
 // Firebase references
 const daysRef = collection(db, 'days')
@@ -14,9 +13,6 @@ const workweek = ref([])
 const weekdays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
 const startOfWeek = computed(() => useDateOfWeek(store.currentDate, 1))
 const endOfWeek = computed(() => useDateOfWeek(store.currentDate, 5))
-
-const router = useRouter()
-const route = useRoute()
 
 async function getDaysInWeek() {
 
