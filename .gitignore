@@ -28,3 +28,10 @@ coverage
 
 # Firebase Config
 /src/firebase/config.js
+.firebaserc
+.github
+.firebase
+firebase.json
+firestore.indexes.json
+firestore.rules
+storage.rules
