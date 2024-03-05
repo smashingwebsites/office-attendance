@@ -8,12 +8,13 @@ import week from '@/pages/week.vue'
 import month from '@/pages/month.vue'
 import account from '@/pages/account.vue'
 import stats from '@/pages/stats.vue'
-import HeaderWeek from '@/components/header/date.vue'
-import HeaderMonth from '@/components/header/date.vue'
+import HeaderWeek from '@/components/header/week.vue'
+import HeaderMonth from '@/components/header/month.vue'
 
 // get the current year and week number for redirecting to the current week
 const currentYear = new Date().getFullYear();
 const currentWeek = useWeekNumber(new Date());
+const currentMonth = new Date().getMonth() + 1;
 
 
 const routes = [
@@ -39,7 +40,15 @@ const routes = [
         },
     },
     {
+        path: '/month',
+        redirect: to => {
+            return { name: 'month', params: { month: currentMonth, year: currentYear } }
+        },
+    },
+    {
         path: '/month/:year/:month',
+        component: month,
+        name: 'month',
         components: {
             default: month,
             dateNavigation: HeaderMonth

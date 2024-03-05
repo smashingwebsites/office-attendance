@@ -5,12 +5,13 @@ import {useWeekNumber} from "@/composables/useWeekNumber";
 
 const currentWeek = computed(() => useWeekNumber(store.currentDate))
 const currentYear = computed(() => store.currentDate.getFullYear())
+const currenMonth = computed(() => store.currentDate.getMonth() + 1)
 
 </script>
 <template>
   <nav>
     <ul>
-      <li><router-link to="/month">Monat</router-link></li>
+      <li><router-link :to="{ name: 'month', params: { month: currenMonth, year: currentYear }}">Monat</router-link></li>
       <li><router-link :to="{ name: 'week', params: { week: currentWeek, year: currentYear }}">Woche</router-link></li>
       <li><router-link to="/stats">Stats</router-link></li>
       <li><router-link to="/account">Account</router-link></li>

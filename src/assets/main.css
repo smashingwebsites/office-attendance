@@ -5,3 +5,55 @@
     margin-inline: auto;
     padding-inline: 1rem;
 }
+
+/* date navigation in Header for week and month view */
+.nav {
+    --_block-padding: .5rem;
+    --_inline-padding: .75rem;
+    display: flex;
+    gap: .2rem;
+    line-height: 1;
+}
+
+.nav__date {
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: var(--_block-padding) var(--_inline-padding);
+    background-color: var(--clr-light-grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+}
+
+.nav__date--week {
+    min-width: 350px;
+}
+
+.nav__date--month {
+    min-width: 300px;
+}
+
+.nav .nav__arrow {
+    padding: var(--_block-padding) var(--_inline-padding);
+    background-color: var(--clr-grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color var(--transition-duration) var(--transition-timing);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav .nav__arrow:hover {
+    background-color: var(--clr-light-grey);
+}
+
+.nav .nav__arrow.nav__arrow--prev {
+    border-radius: var(--border-radius-lg) var(--border-radius) var(--border-radius) var(--border-radius-lg);
+}
+
+.nav .nav__arrow.nav__arrow--next {
+    border-radius: var(--border-radius) var(--border-radius-lg) var(--border-radius-lg) var(--border-radius);
+}
