@@ -34,6 +34,7 @@ const routes = [
         path: '/week/:year/:week',
         component: week,
         name: 'week',
+        meta: { type: 'week' },
         components: {
             default: week,
             dateNavigation: HeaderWeek
@@ -49,6 +50,7 @@ const routes = [
         path: '/month/:year/:month',
         component: month,
         name: 'month',
+        meta: { type: 'month' },
         components: {
             default: month,
             dateNavigation: HeaderMonth

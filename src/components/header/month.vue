@@ -13,7 +13,6 @@ const nextMonth = computed(() => useAdjacentMonth(store.currentDate, 1))
 const prevMonth = computed(() => useAdjacentMonth(store.currentDate, -1))
 
 function setCurrentDateInStore() {
-  // first day of the month
   store.currentDate = new Date(route.params.year, (route.params.month - 1), 1);
 }
 
