@@ -2,7 +2,7 @@
 import WeekDay from "@/components/week/day.vue";
 import {useDateOfWeek} from "@/composables/useDateOfWeek";
 import {db} from '@/firebase'
-import {ref, onUpdated, onMounted, computed, watch} from 'vue'
+import {ref, computed, watch} from 'vue'
 import {getDocs, collection, query, where} from 'firebase/firestore'
 import {store} from "@/store";
 
