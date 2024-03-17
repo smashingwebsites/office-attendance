@@ -17,3 +17,12 @@ npm run dev
 ```sh
 npm run build
 ```
+
+## Deploy to Firebase
+https://firebase.google.com/docs/hosting
+```sh
+npm run build
+```
+```sh
+firebase deploy --only hosting
+```
