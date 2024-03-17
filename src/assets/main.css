@@ -6,6 +6,55 @@
     padding-inline: 1rem;
 }
 
+
+.state--empty {
+    --_clr-font: var(--clr-white);
+    --_clr-state: var(--clr-red);
+    --_clr-state-gradient: linear-gradient(150deg,
+    hsl(0deg 100% 65%) 0%,
+    hsl(0deg 100% 64%) 11%,
+    hsl(0deg 100% 64%) 22%,
+    hsl(0deg 100% 63%) 33%,
+    hsl(0deg 100% 63%) 44%,
+    hsl(0deg 100% 62%) 56%,
+    hsl(0deg 100% 61%) 67%,
+    hsl(0deg 100% 61%) 78%,
+    hsl(0deg 100% 60%) 89%,
+    hsl(0deg 100% 59%) 100%);
+}
+
+.state--partially {
+    --_clr-font: var(--clr-white);
+    --_clr-state: var(--clr-orange);
+    --_clr-state-gradient: linear-gradient(150deg,
+    hsl(33deg 100% 54%) 0%,
+    hsl(33deg 98% 53%) 11%,
+    hsl(33deg 96% 52%) 22%,
+    hsl(33deg 94% 51%) 33%,
+    hsl(33deg 92% 50%) 44%,
+    hsl(33deg 94% 49%) 56%,
+    hsl(33deg 95% 48%) 67%,
+    hsl(33deg 97% 47%) 78%,
+    hsl(33deg 98% 47%) 89%,
+    hsl(33deg 100% 46%) 100%);
+}
+
+.state--filled {
+    --_clr-font: var(--clr-white);
+    --_clr-state: var(--clr-green);
+    --_clr-state-gradient: linear-gradient(150deg,
+    hsl(153deg 47% 49%) 0%,
+    hsl(153deg 48% 48%) 11%,
+    hsl(153deg 48% 48%) 22%,
+    hsl(153deg 48% 47%) 33%,
+    hsl(153deg 48% 46%) 44%,
+    hsl(153deg 48% 45%) 56%,
+    hsl(153deg 49% 45%) 67%,
+    hsl(153deg 49% 44%) 78%,
+    hsl(153deg 49% 43%) 89%,
+    hsl(153deg 49% 43%) 100%);
+}
+
 /* date navigation in Header for week and month view */
 .nav {
     --_block-padding: .5rem;

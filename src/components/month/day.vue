@@ -1,9 +1,12 @@
 <script setup>
-import User from '@/components/week/user.vue'
+import User from '@/components/month/user.vue'
 import { computed } from "vue";
 
 const props = defineProps(['day'])
 
+const dateObject = new Date(props.day.timestamp);
+
+const formattedDate = dateObject.toLocaleDateString('de-DE',  { day: '2-digit', month: '2-digit' });
 const dayStatusClass = computed(() => {
   if (props.day.mandatory) {
     if (props.day.users) {
@@ -24,7 +27,7 @@ const dayStatusClass = computed(() => {
 <template>
   <div class="day" :class="dayStatusClass">
     <div class="day__date">
-      {{ day.date }}
+      {{ formattedDate }}
     </div>
     <div v-if="day.users" v-for="user in day.users">
       <User :user="user" />
@@ -34,26 +37,23 @@ const dayStatusClass = computed(() => {
 <style scoped>
 .day {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   gap: .25rem;
   width: 100%;
-}
+  padding: .5rem;
 
-.day__date {
-  font-weight: 500;
   border: 1px solid var(--_clr-state, var(--clr-grey));
   background-color: var(--_clr-state, var(--clr-light-grey));
   background-image: var(--_clr-state-gradient);
-  padding: .25rem;
-  text-align: center;
   border-radius: var(--border-radius-lg);
-  font-size: 1.1rem;
   color: var(--_clr-font, var(--clr-black));
-  position: relative;
 }
 
-/* if day has users */
-.day__date:has(+ div) {
-  border-radius: var(--border-radius-lg) var(--border-radius-lg) var(--border-radius) var(--border-radius);
+.day__date {
+  font-weight: 700;
+  padding: .25rem;
+  font-size: 1.1rem;
+  margin-right: auto;
 }
 </style>
