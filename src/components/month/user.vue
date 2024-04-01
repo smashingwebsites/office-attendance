@@ -25,5 +25,6 @@ const initials = computed(() => {
   font-size: 1rem;
   font-weight: 500;
   color: var(--clr-black);
+  opacity: .75;
 }
 </style>
