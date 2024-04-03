@@ -64,11 +64,9 @@ watch(() => store.currentDate, getDaysInMonth, {immediate: true});
 
 </script>
 <template>
-  <div>
-    <div class="month">
-      <div v-for="i in startOfMonth.getDay()-1" :key="i"><!-- Fill empty days at the start of a month with empty objects --></div>
-      <Day v-for="day in daysInMonth" :day="day" :key="day.id"/>
-    </div>
+  <div class="month">
+    <div v-for="i in startOfMonth.getDay()-1" :key="i"><!-- Fill empty days at the start of a month with empty objects --></div>
+    <Day v-for="day in daysInMonth" :day="day" :key="day.id"/>
   </div>
 </template>
 
