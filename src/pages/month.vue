@@ -64,6 +64,9 @@ watch(() => store.currentDate, getDaysInMonth, {immediate: true});
 
 </script>
 <template>
+  <div class="month-header">
+    <div class="day-label" v-for="dayLabel in weekdays">{{ dayLabel }}</div>
+  </div>
   <div class="month">
     <div v-for="i in startOfMonth.getDay()-1" :key="i"><!-- Fill empty days at the start of a month with empty objects --></div>
     <Day v-for="day in daysInMonth" :day="day" :key="day.id"/>
@@ -71,9 +74,26 @@ watch(() => store.currentDate, getDaysInMonth, {immediate: true});
 </template>
 
 <style scoped>
-.month {
+.month, .month-header {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
+}
+
+.month-header {
+  margin-bottom: 1.5rem;
+}
+
+.day-label {
+  font-weight: 700;
+  text-align: center;
+  padding: .5rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+
+  background-color: var(--clr-light-grey);
+  background-image: var(--_clr-state-gradient);
+  border-radius: var(--border-radius-lg);
+  color: #777;
 }
 </style>
