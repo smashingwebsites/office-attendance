@@ -1,12 +1,12 @@
 <script setup>
 import User from '@/components/month/user.vue'
-import { computed } from "vue";
+import {computed} from "vue";
 
 const props = defineProps(['day'])
 
 const dateObject = new Date(props.day.timestamp);
 
-const formattedDate = dateObject.toLocaleDateString('de-DE',  { day: '2-digit', month: '2-digit' });
+const formattedDate = dateObject.toLocaleDateString('de-DE', {day: '2-digit', month: '2-digit'});
 const dayStatusClass = computed(() => {
   if (props.day.mandatory) {
     if (props.day.users) {
@@ -17,8 +17,7 @@ const dayStatusClass = computed(() => {
       } else {
         return 'state--filled'
       }
-    }
-    else {
+    } else {
       return 'state--empty'
     }
   }
@@ -29,9 +28,7 @@ const dayStatusClass = computed(() => {
     <div class="day__date">
       {{ formattedDate }}
     </div>
-    <div v-if="day.users" v-for="user in day.users">
-      <User :user="user" />
-    </div>
+    <User :user="user" v-if="day.users" v-for="user in day.users"/>
   </div>
 </template>
 <style scoped>
