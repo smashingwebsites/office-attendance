@@ -85,15 +85,16 @@ watch(() => store.currentDate, getDaysInMonth, {immediate: true});
 }
 
 .day-label {
-  font-weight: 700;
+  font-weight: 500;
   text-align: center;
   padding: .5rem;
   letter-spacing: .05em;
   text-transform: uppercase;
 
+  /*border: 2px solid var(--clr-grey);
   background-color: var(--clr-light-grey);
-  background-image: var(--_clr-state-gradient);
+  background-image: var(--_clr-state-gradient);*/
   border-radius: var(--border-radius-lg);
-  color: #777;
+  color: var(--clr-black);
 }
 </style>
