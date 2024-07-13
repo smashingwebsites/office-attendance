@@ -1,6 +1,7 @@
 <script setup>
 import {useWeekNumber} from "@/composables/useWeekNumber";
 import {useRouter} from 'vue-router';
+import { auth } from  '@/firebase';
 
 const router = useRouter();
 
@@ -29,7 +30,9 @@ const isActive = (type) => {
         </router-link>
       </li>
       <li>
-        <router-link to="/stats">Stats</router-link>
+        <router-link to="/stats">
+          Stats
+        </router-link>
       </li>
       <li>
         <router-link to="/account">Account</router-link>

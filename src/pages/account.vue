@@ -1,10 +1,14 @@
 <template>
   <div>
-    <h1>User Profile</h1>
+    <h1>User Profile {{auth.currentUser.displayName}}</h1>
   </div>
 </template>
 
 <script setup>
+
+import { auth } from  '@/firebase';
+
+
 </script>
 
 <style scoped>
