@@ -1,7 +1,42 @@
 <script setup>
 import {useWeekNumber} from "@/composables/useWeekNumber";
 import {useRouter} from 'vue-router';
-import { auth } from  '@/firebase';
+import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import {auth} from "@/firebase";
+import { signOut } from 'firebase/auth'
+
+import {store} from "@/store";
+
+const provider = new GoogleAuthProvider();
+
+const signUserIn = async () => {
+  signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+  });
+}
+const signUserOut = async () => {
+  signOut(auth).then(() => {
+    // Sign-out successful.
+  }).catch((error) => {
+    // An error happened.
+    console.log(error)
+  });
+}
 
 const router = useRouter();
 
@@ -18,26 +53,28 @@ const isActive = (type) => {
       <li>
         <router-link
             :to="{ name: 'month', params: { month: currentMonth, year: currentYear }}"
-            :class="{ active: isActive('month') }">
+            :class="{ active: isActive('month') }" class="nav-link">
           Monat
         </router-link>
       </li>
       <li>
         <router-link
             :to="{ name: 'week', params: { week: currentWeek, year: currentYear }}"
-            :class="{ active: isActive('week') }">
+            :class="{ active: isActive('week') }" class="nav-link">
           Woche
         </router-link>
       </li>
+      <!-- Coming Soon
       <li>
-        <router-link to="/stats">
+        <router-link to="/stats" class="nav-link">
           Stats
         </router-link>
       </li>
       <li>
-        <router-link to="/account">Account</router-link>
-      </li>
-      <li><a href="#">Logout</a></li>
+        <router-link to="/account" class="nav-link">Account</router-link>
+      </li>-->
+      <li v-if="store.userIsSignedIn"><a class="nav-link" type="button" @click.prevent="signUserOut">Logout</a></li>
+      <li v-if="!store.userIsSignedIn"><a class="nav-link" type="button" @click.prevent="signUserIn">Login</a></li>
     </ul>
   </nav>
 </template>
@@ -55,7 +92,7 @@ nav ul {
   gap: .5rem;
 }
 
-nav ul li a {
+nav ul li .nav-link {
   padding: .5rem 1rem;
   border-radius: var(--border-radius);
   background: transparent;
@@ -63,13 +100,14 @@ nav ul li a {
   display: block;
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
 }
 
-nav ul li a:hover, nav ul li a:focus {
+nav ul li .nav-link:hover, nav ul li .nav-link:focus {
   background: var(--clr-grey);
 }
 
-nav ul li a.active, nav ul li a.router-link-active {
+nav ul li .nav-link.active, nav ul li .nav-link.router-link-active {
   background: var(--clr-hightlight);
 }
 </style>
