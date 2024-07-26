@@ -1,6 +1,10 @@
 <script setup>
 import User from '@/components/week/user.vue'
-import { computed } from "vue";
+import {computed} from "vue";
+import {auth} from '@/firebase';
+import {store} from "@/store";
+
+import CheckinButton from "@/components/checkin-button.vue";
 
 const props = defineProps(['day'])
 
@@ -14,21 +18,36 @@ const dayStatusClass = computed(() => {
       } else {
         return 'state--filled'
       }
-    }
-    else {
+    } else {
       return 'state--empty'
     }
   }
 })
+
+const userNOTCheckedIn = computed(() => {
+  // User is NOT checked in (or signed in for this day) IF:
+  // * he is logged into his account
+  // * no matching uid was found
+  // * or there are no users checked in this day to begin with
+  if (!store.userIsSignedIn)
+    return false
+
+  if (props.day.users) {
+    return !props.day.users.some(user => user.uid === auth.currentUser.uid);
+  }
+  return true;
+})
 </script>
 <template>
+
   <div class="day" :class="dayStatusClass">
     <div class="day__date">
       {{ day.date }}
     </div>
     <div v-if="day.users" v-for="user in day.users">
-      <User :user="user" />
+      <User :user="user"/>
     </div>
+    <checkin-button v-if="userNOTCheckedIn" :day="day" :user="auth.currentUser" />
   </div>
 </template>
 <style scoped>

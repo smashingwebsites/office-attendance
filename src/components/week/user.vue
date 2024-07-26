@@ -3,7 +3,7 @@ defineProps(['user'])
 
 </script>
 <template>
-  <div class="user">{{ user.name.first }} {{ user.name.last }}</div>
+  <div class="user">{{ user.name.first }} {{ user.name.last }} {{ user.name }} </div>
 </template>
 <style scoped>
 .user {

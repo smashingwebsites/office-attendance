@@ -36,6 +36,7 @@ async function getDaysInWeek() {
   userDays.forEach(userDay => {
     workweek.value = workweek.value.map(weekDay => {
       if (weekDay.date === userDay.date) {
+        weekDay.docId = userDay.id;
         weekDay.users = userDay.users;
         weekDay.mandatory = userDay.isMandatory;
       }
@@ -50,6 +51,7 @@ async function getQueryDays() {
   const docSnap = await getDocs(queryRef);
 
   return docSnap.docs.map((doc) => ({
+    id: doc.id,
     date: new Date(doc.data().date.seconds * 1000).toLocaleDateString(), // Convert seconds to milliseconds
     users: doc.data().users,
     isMandatory: doc.data().mandatory
