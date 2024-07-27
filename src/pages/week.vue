@@ -58,17 +58,19 @@ async function getQueryDays() {
   }));
 }
 
-function handleUserAdded(dayId, user) {
-  // Do something with the new user
-  console.log(user.displayName)
-  console.log(workweek.value[dayId].users)
-  workweek.value[dayId].users.push({
-    name: {
-      first: "alexander",
-      last: "herrmann"
-    }
-  })
-  console.log(workweek.value[dayId].users)
+function handleUserAdded(dayId, userId, userName) {
+  if (workweek.value[dayId].users) {
+    workweek.value[dayId].users.push({
+      id: userId,
+      name: userName
+    })
+  }
+  else {
+    workweek.value[dayId].users = [{
+      id: userId,
+      name: userName
+    }]
+  }
 }
 
 provide('userAddedHandler', handleUserAdded);

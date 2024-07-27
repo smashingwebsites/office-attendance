@@ -33,7 +33,7 @@ const userNOTCheckedIn = computed(() => {
     return false
 
   if (props.day.users) {
-    return !props.day.users.some(user => user.uid === auth.currentUser.uid);
+    return !props.day.users.some(user => user.id === auth.currentUser.uid);
   }
   return true;
 })

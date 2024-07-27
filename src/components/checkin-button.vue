@@ -1,21 +1,21 @@
 <script setup>
 import {collection, doc, setDoc, updateDoc, arrayUnion, Timestamp} from "firebase/firestore";
-import { inject } from "vue";
+import {inject} from "vue";
 import {db} from "@/firebase";
+
 const props = defineProps(['day', 'user'])
 
 const userAddedHandler = inject('userAddedHandler');
 
 const checkIn = async () => {
-  userAddedHandler(props.day.id, props.user);
+  userAddedHandler(props.day.id, props.user.uid, props.user.displayName);
+
   if (props.day.docId) {
     await updateDoc(doc(db, "days", props.day.docId), {
       users: arrayUnion(
           {
-            name: {
-              first: "alexander",
-              last: "2te2stLast"
-            }
+            id: props.user.uid,
+            name: props.user.displayName
           }
       )
     });
@@ -23,10 +23,8 @@ const checkIn = async () => {
     await setDoc(doc(collection(db, 'days')), {
       date: Timestamp.fromDate(new Date(props.day.timestamp)),
       users: [{
-        name: {
-          first: "testFirst",
-          last: "testLast"
-        }
+        id: props.user.uid,
+        name: props.user.displayName
       }]
     });
   }
@@ -34,7 +32,7 @@ const checkIn = async () => {
 </script>
 <template>
   <button @click="checkIn" class="button">
-    {{ day.docId }}
+   plus
   </button>
 </template>
 
