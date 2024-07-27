@@ -2,7 +2,7 @@
 import WeekDay from "@/components/week/day.vue";
 import {useDateOfWeek} from "@/composables/useDateOfWeek";
 import {db} from '@/firebase'
-import {ref, computed, watch} from 'vue'
+import {ref, computed, watch, provide} from 'vue'
 import {getDocs, collection, query, where} from 'firebase/firestore'
 import {store} from "@/store";
 
@@ -24,7 +24,7 @@ async function getDaysInWeek() {
     startOfWeekDateObj.setDate(startOfWeek.value.getDate() + i);
 
     workweek.value.push({
-      id: "day" + i,
+      id: i,
       date: startOfWeekDateObj.toLocaleDateString(),
       name: weekdays[i],
       timestamp: startOfWeekDateObj.toString()
@@ -57,6 +57,21 @@ async function getQueryDays() {
     isMandatory: doc.data().mandatory
   }));
 }
+
+function handleUserAdded(dayId, user) {
+  // Do something with the new user
+  console.log(user.displayName)
+  console.log(workweek.value[dayId].users)
+  workweek.value[dayId].users.push({
+    name: {
+      first: "alexander",
+      last: "herrmann"
+    }
+  })
+  console.log(workweek.value[dayId].users)
+}
+
+provide('userAddedHandler', handleUserAdded);
 
 watch(() => store.currentDate, getDaysInWeek, {immediate: true});
 </script>
