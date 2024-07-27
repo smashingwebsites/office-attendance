@@ -1,18 +1,13 @@
 <script setup>
 import {computed} from "vue";
-
+// todo: cleanup
 const props = defineProps(['user'])
-
-// Get users initials
-const initials = computed(() => {
-  return props.user.name.first.charAt(0).toUpperCase() + props.user.name.last.charAt(0).toUpperCase()
-})
 
 </script>
 <template>
   <div class="user">
-    <span class="user__initials">{{ initials }}</span>
-    <div class="user__fullname">{{ user.name.first }} {{ user.name.last }}</div>
+    <span class="user__initials">AH<!--todo: load img src from google profile pic --></span>
+    <div class="user__fullname">{{ user.name }}</div>
   </div>
 </template>
 <style scoped>
