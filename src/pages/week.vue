@@ -21,7 +21,6 @@ async function getDaysInWeek() {
   const startOfWeekDateObj = new Date(startOfWeek.value)
 
   for (let i = 0; i < 5; i++) {
-    startOfWeekDateObj.setDate(startOfWeek.value.getDate() + i);
 
     workweek.value.push({
       id: i,
@@ -29,6 +28,8 @@ async function getDaysInWeek() {
       name: weekdays[i],
       timestamp: startOfWeekDateObj.toString()
     });
+
+    startOfWeekDateObj.setDate(startOfWeekDateObj.getDate() + 1);
   }
 
   const userDays = await getQueryDays();
