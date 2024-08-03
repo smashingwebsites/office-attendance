@@ -5,6 +5,7 @@ import {auth} from '@/firebase';
 import {store} from "@/store";
 
 import CheckinButton from "@/components/checkin-button.vue";
+import CheckoutButton from "@/components/checkout-button.vue";
 
 const props = defineProps(['day'])
 
@@ -37,6 +38,15 @@ const userNOTCheckedIn = computed(() => {
   }
   return true;
 })
+const userISCheckedIn = computed(() => {
+  if (!store.userIsSignedIn)
+    return false
+
+  if (props.day.users) {
+    return props.day.users.some(user => user.id === auth.currentUser.uid);
+  }
+  return false;
+})
 </script>
 <template>
 
@@ -48,6 +58,7 @@ const userNOTCheckedIn = computed(() => {
       <User :user="user"/>
     </div>
     <checkin-button v-if="userNOTCheckedIn" :day="day" :user="auth.currentUser" />
+    <checkout-button v-if="userISCheckedIn" :day="day" :user="auth.currentUser" />
   </div>
 </template>
 <style scoped>

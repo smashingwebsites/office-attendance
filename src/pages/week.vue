@@ -64,8 +64,7 @@ function handleUserAdded(dayId, userId, userName) {
       id: userId,
       name: userName
     })
-  }
-  else {
+  } else {
     workweek.value[dayId].users = [{
       id: userId,
       name: userName
@@ -73,7 +72,14 @@ function handleUserAdded(dayId, userId, userName) {
   }
 }
 
+function handleUserRemoved(dayId, userId) {
+  if (workweek.value[dayId].users) {
+    workweek.value[dayId].users.splice(workweek.value[dayId].users.indexOf(userId), 1);
+  }
+}
+
 provide('userAddedHandler', handleUserAdded);
+provide('userRemovedHandler', handleUserRemoved);
 
 watch(() => store.currentDate, getDaysInWeek, {immediate: true});
 </script>

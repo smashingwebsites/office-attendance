@@ -32,7 +32,7 @@ const checkIn = async () => {
 </script>
 <template>
   <button @click="checkIn" class="button">
-   plus
+    &plus;
   </button>
 </template>
 
