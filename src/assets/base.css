@@ -10,8 +10,10 @@
 
   /* day state colors */
   --clr-green: #42b983;
+  --clr-light-green: #6cd5a2;
   --clr-orange: #ff8c00;
   --clr-red: #ff4c4c;
+  --clr-light-red: #ffabab;
 
   --border-radius: 5px;
   --border-radius-lg: 8px;

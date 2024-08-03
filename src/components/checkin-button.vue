@@ -37,4 +37,17 @@ const checkIn = async () => {
 </template>
 
 <style scoped>
+.button {
+  margin-top: .5rem;
+  background-color: var(--clr-light-green);
+  border: 2px solid var(--clr-green);
+  border-radius: var(--border-radius);
+  font-size: 2rem;
+  line-height: 1;
+  color: white;
+}
+
+.button:hover {
+  background-color: var(--clr-green);
+}
 </style>

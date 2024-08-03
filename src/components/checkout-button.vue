@@ -26,4 +26,17 @@ const checkOut = async () => {
 </template>
 
 <style scoped>
+.button {
+  margin-top: .5rem;
+  background-color: var(--clr-light-red);
+  border: 2px solid var(--clr-red);
+  border-radius: var(--border-radius);
+  font-size: 2rem;
+  line-height: 1;
+  color: white;
+}
+
+.button:hover {
+  background-color: var(--clr-red);
+}
 </style>

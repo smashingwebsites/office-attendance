@@ -106,3 +106,10 @@
 .nav .nav__arrow.nav__arrow--next {
     border-radius: var(--border-radius) var(--border-radius-lg) var(--border-radius-lg) var(--border-radius);
 }
+
+.button {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    transition: all var(--transition-duration) var(--transition-timing);
+}
