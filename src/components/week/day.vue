@@ -26,10 +26,10 @@ const dayStatusClass = computed(() => {
 })
 
 const userNOTCheckedIn = computed(() => {
-  // User is NOT checked in (or signed in for this day) IF:
-  // * he is logged into his account
-  // * no matching uid was found
-  // * or there are no users checked in this day to begin with
+  /* User is NOT checked in (or signed in for this day) IF:
+   * he is logged into his account
+   * no matching uid was found
+   * or there are no users checked in this day to begin with */
   if (!store.userIsSignedIn)
     return false
 
@@ -49,10 +49,9 @@ const userISCheckedIn = computed(() => {
 })
 </script>
 <template>
-
   <div class="day" :class="dayStatusClass">
     <div class="day__date">
-      {{ day.date }}
+      {{ day.date }} - {{day.name}}
     </div>
     <div v-if="day.users" v-for="user in day.users">
       <User :user="user"/>

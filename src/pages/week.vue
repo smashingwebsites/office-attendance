@@ -24,7 +24,7 @@ async function getDaysInWeek() {
 
     workweek.value.push({
       id: i,
-      date: startOfWeekDateObj.toLocaleDateString(),
+      date: startOfWeekDateObj.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }),
       name: weekdays[i],
       timestamp: startOfWeekDateObj.toString()
     });
@@ -36,7 +36,12 @@ async function getDaysInWeek() {
 
   userDays.forEach(userDay => {
     workweek.value = workweek.value.map(weekDay => {
-      if (weekDay.date === userDay.date) {
+
+      // auxiliary objects for date comparison
+      const weekDayDateObj = new Date(weekDay.timestamp)
+      const userDayDateObj = new Date(userDay.date)
+
+      if (weekDayDateObj.getTime() === userDayDateObj.getTime()) {
         weekDay.docId = userDay.id;
         weekDay.users = userDay.users;
         weekDay.mandatory = userDay.isMandatory;
@@ -53,7 +58,7 @@ async function getQueryDays() {
 
   return docSnap.docs.map((doc) => ({
     id: doc.id,
-    date: new Date(doc.data().date.seconds * 1000).toLocaleDateString(), // Convert seconds to milliseconds
+    date: new Date(doc.data().date.seconds * 1000), // Convert seconds to milliseconds
     users: doc.data().users,
     isMandatory: doc.data().mandatory
   }));
