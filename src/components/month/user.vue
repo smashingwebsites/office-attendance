@@ -1,12 +1,21 @@
 <script setup>
 import {computed} from "vue";
-// todo: cleanup
+
 const props = defineProps(['user'])
+
+console.log(props.user)
+
+const userInitials = computed(() => {
+  if (props.user.name.length > 0) {
+    return props.user.name.split(' ').map(word => word.charAt(0)).join('');
+  }
+  return '-'
+})
 
 </script>
 <template>
   <div class="user">
-    <span class="user__initials">AH<!--todo: load img src from google profile pic --></span>
+    <span class="user__initials">{{ userInitials }}</span>
     <div class="user__fullname">{{ user.name }}</div>
   </div>
 </template>
