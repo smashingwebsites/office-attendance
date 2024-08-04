@@ -8,8 +8,8 @@ import {usePreviousWeek} from "@/composables/usePreviousWeek";
 
 const route = useRoute()
 
-const startOfWeek = computed(() => useDateOfWeek(store.currentDate, 1).toLocaleDateString())
-const endOfWeek = computed(() => useDateOfWeek(store.currentDate, 5).toDateString())
+const startOfWeek = computed(() => useDateOfWeek(store.currentDate, 1).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }));
+const endOfWeek = computed(() => useDateOfWeek(store.currentDate, 5).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: '2-digit' }));
 
 const nextWeek = computed(() => useNextWeek(store.currentDate))
 const prevWeek = computed(() => usePreviousWeek(store.currentDate))
