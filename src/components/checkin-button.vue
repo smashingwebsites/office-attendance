@@ -3,15 +3,15 @@ import {collection, doc, setDoc, updateDoc, arrayUnion, Timestamp} from "firebas
 import {inject} from "vue";
 import {db} from "@/firebase";
 
-const props = defineProps(['day', 'user'])
+const props = defineProps(['docId', 'user', 'dayIndex', 'dayTimestamp'])
 
 const userAddedHandler = inject('userAddedHandler');
 
 const checkIn = async () => {
-  userAddedHandler(props.day.id, props.user.uid, props.user.displayName);
+  userAddedHandler(props.dayIndex, props.docId, props.user.uid, props.user.displayName);
 
-  if (props.day.docId) {
-    await updateDoc(doc(db, "days", props.day.docId), {
+  if (props.docId) {
+    await updateDoc(doc(db, "days", props.docId), {
       users: arrayUnion(
           {
             id: props.user.uid,
@@ -21,7 +21,7 @@ const checkIn = async () => {
     });
   } else {
     await setDoc(doc(collection(db, 'days')), {
-      date: Timestamp.fromDate(new Date(props.day.timestamp)),
+      date: Timestamp.fromDate(new Date(props.dayTimestamp)),
       users: [{
         id: props.user.uid,
         name: props.user.displayName
@@ -38,16 +38,13 @@ const checkIn = async () => {
 
 <style scoped>
 .button {
-  margin-top: .5rem;
-  background-color: var(--clr-light-green);
-  border: 2px solid var(--clr-green);
-  border-radius: var(--border-radius);
-  font-size: 2rem;
+  --_btn-light-clr: var(--clr-light-green);
+  --_btn-dark-clr: var(--clr-green);
+
+  border-width: 2px;
   line-height: 1;
   color: white;
+  z-index: 1;
 }
 
-.button:hover {
-  background-color: var(--clr-green);
-}
 </style>

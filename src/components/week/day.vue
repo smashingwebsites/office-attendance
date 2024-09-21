@@ -7,7 +7,7 @@ import {store} from "@/store";
 import CheckinButton from "@/components/checkin-button.vue";
 import CheckoutButton from "@/components/checkout-button.vue";
 
-const props = defineProps(['day'])
+const props = defineProps(['day', 'dayIndex'])
 
 const dayStatusClass = computed(() => {
   if (props.day.mandatory) {
@@ -47,17 +47,28 @@ const userISCheckedIn = computed(() => {
   }
   return false;
 })
+
 </script>
 <template>
   <div class="day" :class="dayStatusClass">
     <div class="day__date">
-      {{ day.date }} - {{day.name}}
+      {{ day.date }} - {{ day.name }}
     </div>
     <div v-if="day.users" v-for="user in day.users">
       <User :user="user"/>
     </div>
-    <checkin-button v-if="userNOTCheckedIn" :day="day" :user="auth.currentUser" />
-    <checkout-button v-if="userISCheckedIn" :day="day" :user="auth.currentUser" />
+    <checkin-button v-if="userNOTCheckedIn"
+                    :docId="day.docId"
+                    :dayIndex="dayIndex"
+                    :dayTimestamp="day.timestamp"
+                    :user="auth.currentUser"
+                    class="button--week"/>
+    <checkout-button v-if="userISCheckedIn"
+                     :docId="day.docId"
+                     :dayIndex="dayIndex"
+                     :users="day.users"
+                     :userUid="auth.currentUser.uid"
+                     class="button--week"/>
   </div>
 </template>
 <style scoped>

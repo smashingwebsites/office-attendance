@@ -3,8 +3,6 @@ import {computed} from "vue";
 
 const props = defineProps(['user'])
 
-console.log(props.user)
-
 const userInitials = computed(() => {
   if (props.user.name.length > 0) {
     return props.user.name.split(' ').map(word => word.charAt(0)).join('');
@@ -40,9 +38,9 @@ const userInitials = computed(() => {
   transition: opacity var(--transition-duration) var(--transition-timing);
   border: 1px solid var(--_clr-state, var(--clr-grey));;
   background-color: var(--clr-light-grey);
-  border-radius: 50%;
-  width: 2.5rem;
-  height: 2.5rem;
+  border-radius: var(--month-usr-border-radius);
+  width: var(--month-usr-size);
+  height: var(--month-usr-size);
   opacity: .75;
 }
 

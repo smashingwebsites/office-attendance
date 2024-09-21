@@ -64,23 +64,23 @@ async function getQueryDays() {
   }));
 }
 
-function handleUserAdded(dayId, userId, userName) {
-  if (workweek.value[dayId].users) {
-    workweek.value[dayId].users.push({
+function handleUserAdded(dayIndex,docId, userId, userName) {
+  if (workweek.value[dayIndex].users) {
+    workweek.value[dayIndex].users.push({
       id: userId,
       name: userName
     })
   } else {
-    workweek.value[dayId].users = [{
+    workweek.value[dayIndex].users = [{
       id: userId,
       name: userName
     }]
   }
 }
 
-function handleUserRemoved(dayId, userId) {
-  if (workweek.value[dayId].users) {
-    workweek.value[dayId].users.splice(workweek.value[dayId].users.indexOf(userId), 1);
+function handleUserRemoved(dayIndex, userId) {
+  if (workweek.value[dayIndex].users) {
+    workweek.value[dayIndex].users.splice(workweek.value[dayIndex].users.indexOf(userId), 1);
   }
 }
 
@@ -92,7 +92,7 @@ watch(() => store.currentDate, getDaysInWeek, {immediate: true});
 
 <template>
   <div class="week">
-    <WeekDay v-for="day in workweek" :day="day"/>
+    <WeekDay v-for="(day, index) in workweek" :day="day" :dayIndex="index" :key="index"/>
   </div>
 </template>
 

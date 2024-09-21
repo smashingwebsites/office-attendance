@@ -1,8 +1,13 @@
 <script setup>
 import User from '@/components/month/user.vue'
 import {computed} from "vue";
+import {store} from "@/store";
+import {auth} from "@/firebase";
 
-const props = defineProps(['day'])
+import CheckinButton from "@/components/checkin-button.vue";
+import CheckoutButton from "@/components/checkout-button.vue";
+
+const props = defineProps(['day', 'dayIndex'])
 
 const dateObject = new Date(props.day.timestamp);
 
@@ -22,17 +27,59 @@ const dayStatusClass = computed(() => {
     }
   }
 })
+
+const userNOTCheckedIn = computed(() => {
+  /* User is NOT checked in (or signed in for this day) IF:
+   * he is logged into his account
+   * no matching uid was found
+   * or there are no users checked in this day to begin with */
+  if (!store.userIsSignedIn)
+    return false
+
+  if (props.day.users) {
+    return !props.day.users.some(user => user.id === auth.currentUser.uid);
+  }
+  return true;
+})
+
+const userISCheckedIn = computed(() => {
+  if (!store.userIsSignedIn)
+    return false
+
+  if (props.day.users) {
+    return props.day.users.some(user => user.id === auth.currentUser.uid);
+  }
+  return false;
+})
+
 </script>
 <template>
   <div class="day" :class="dayStatusClass">
+
     <div class="day__date">
       {{ formattedDate }}
     </div>
+    <checkin-button v-if="userNOTCheckedIn"
+                    :docId="day.docId"
+                    :dayIndex="dayIndex"
+                    :dayTimestamp="day.timestamp"
+                    :user="auth.currentUser"
+                    class="button--month"
+                    :class="{ mandatory: day.mandatory }" />
+    <checkout-button v-if="userISCheckedIn"
+                     :docId="day.docId"
+                     :dayIndex="dayIndex"
+                     :users="day.users"
+                     :userUid="auth.currentUser.uid"
+                     class="button--month"
+                     :class="{ mandatory: day.mandatory }" />
+
     <User :user="user" v-if="day.users" v-for="user in day.users"/>
   </div>
 </template>
 <style scoped>
 .day {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;

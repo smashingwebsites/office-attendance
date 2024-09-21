@@ -1,51 +1,57 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
-  --clr-white: #f8f8f8;
+    --clr-opacity: .3;
+    --clr-white: #f8f8f8;
 
-  --clr-black: #121227;
-  --clr-grey: #d8e0e6;
-  --clr-light-grey: #f1f1f1;
+    --clr-black: #121227;
+    --clr-grey: #d8e0e6;
+    --clr-light-grey: #f1f1f1;
 
-  --clr-hightlight: #fece41;
+    --clr-hightlight: #fece41;
 
-  /* day state colors */
-  --clr-green: #42b983;
-  --clr-light-green: #6cd5a2;
-  --clr-orange: #ff8c00;
-  --clr-red: #ff4c4c;
-  --clr-light-red: #ffabab;
+    /* day state colors */
+    --clr-green: #42b983;
+    --clr-light-green: 108, 213, 162;
 
-  --border-radius: 5px;
-  --border-radius-lg: 8px;
+    --clr-orange: #ff8c00;
+    --clr-red: #ff4c4c;
+    --clr-light-red: 255, 171, 171;
 
-  --transition-duration: .3s;
-  --transition-timing: ease-in-out;
+    --border-radius: 5px;
+    --border-radius-lg: 8px;
+
+    --transition-duration: .3s;
+    --transition-timing: ease-in-out;
+
+    /* month view user styles */
+    --month-usr-border-radius: 50%;
+    --month-usr-size: 2.5rem;
 }
 
 /* semantic color variables for this project */
 :root {
-  --color-background: var(--clr-white);
-  --color-text: var(--clr-black);
+    --color-background: var(--clr-white);
+    --color-text: var(--clr-black);
 }
 
 
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  margin: 0;
-  font-weight: normal;
+    box-sizing: border-box;
+    margin: 0;
+    font-weight: normal;
 }
 
 body {
-  min-height: 100vh;
-  color: var(--color-text);
-  background: var(--color-background);
-  transition: color 0.5s, background-color 0.5s;
-  line-height: 1.6;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  font-size: 15px;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    color: var(--color-text);
+    background: var(--color-background);
+    transition: color 0.5s, background-color 0.5s;
+    line-height: 1.6;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    font-size: 15px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }

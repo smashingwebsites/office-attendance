@@ -1,6 +1,6 @@
 <script setup>
 import {db} from '@/firebase'
-import {ref, computed, watch} from 'vue'
+import {ref, computed, watch, provide} from 'vue'
 import {getDocs, collection, query, where} from 'firebase/firestore'
 import {store} from "@/store";
 import Day from "@/components/month/day.vue";
@@ -27,8 +27,8 @@ async function getDaysInMonth() {
     if (startOfMonthDateObj.getDay() === 0 || startOfMonthDateObj.getDay() === 6) {
       continue;
     }
+
     daysInMonth.value.push({
-      id: "day" + i,
       date: startOfMonthDateObj.toLocaleDateString(),
       name: weekdays[startOfMonthDateObj.getDay() - 1],
       timestamp: startOfMonthDateObj.toString()
@@ -40,6 +40,7 @@ async function getDaysInMonth() {
   userDays.forEach(userDay => {
     daysInMonth.value = daysInMonth.value.map(monthDay => {
       if (monthDay.date === userDay.date) {
+        monthDay.docId = userDay.id;
         monthDay.users = userDay.users;
         monthDay.mandatory = userDay.isMandatory;
       }
@@ -54,6 +55,7 @@ async function getQueryDays() {
   const docSnap = await getDocs(queryRef);
 
   return docSnap.docs.map((doc) => ({
+    id: doc.id,
     date: new Date(doc.data().date.seconds * 1000).toLocaleDateString(), // Convert seconds to milliseconds
     users: doc.data().users,
     isMandatory: doc.data().mandatory
@@ -62,14 +64,39 @@ async function getQueryDays() {
 
 watch(() => store.currentDate, getDaysInMonth, {immediate: true});
 
+function handleUserAdded(dayIndex, docId, userId, userName) {
+  if (daysInMonth.value[dayIndex].users) {
+    daysInMonth.value[dayIndex].users.push({
+      id: userId,
+      name: userName
+    })
+  } else {
+    // todo: docId missing -
+    daysInMonth.value[dayIndex].docId = docId;
+    daysInMonth.value[dayIndex].users = [{
+      id: userId,
+      name: userName
+    }]
+  }
+}
+
+function handleUserRemoved(dayIndex, userId) {
+  if (daysInMonth.value[dayIndex].users) {
+    daysInMonth.value[dayIndex].users.splice(daysInMonth.value[dayIndex].users.indexOf(userId), 1);
+  }
+}
+
+provide('userAddedHandler', handleUserAdded);
+provide('userRemovedHandler', handleUserRemoved);
+
 </script>
 <template>
   <div class="month-header">
     <div class="day-label" v-for="dayLabel in weekdays">{{ dayLabel }}</div>
   </div>
   <div class="month">
-    <div v-for="i in startOfMonth.getDay()-1" :key="i"><!-- Fill empty days at the start of a month with empty objects --></div>
-    <Day v-for="day in daysInMonth" :day="day" :key="day.id"/>
+    <div v-if="(startOfMonth.getDay() > 1) && (startOfMonth.getDay() < 6)" v-for="i in startOfMonth.getDay()-1" :key="i"><!-- Fill empty days at the start of a month with empty objects --></div>
+    <Day v-for="(day, index) in daysInMonth" :day="day" :dayIndex="index" :key="index"/>
   </div>
 </template>
 

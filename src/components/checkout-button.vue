@@ -3,20 +3,19 @@ import {collection, doc, setDoc, updateDoc, arrayUnion, Timestamp, deleteField} 
 import {inject} from "vue";
 import {db} from "@/firebase";
 
-const props = defineProps(['day', 'user'])
+const props = defineProps(['docId', 'dayIndex', 'users', 'userUid'])
 
 const userRemovedHandler = inject('userRemovedHandler');
 
 const checkOut = async () => {
-  userRemovedHandler(props.day.id, props.user.uid);
+  userRemovedHandler(props.dayIndex, props.userUid);
 
-  const tempUsers = [...props.day.users];
-  const indexOfUserToDelete = tempUsers.findIndex(user => user.id === props.user.uid);
+  const tempUsers = [...props.users];
+  const indexOfUserToDelete = tempUsers.findIndex(user => user.id === props.userUid);
 
-  await updateDoc(doc(db, "days", props.day.docId), {
+  await updateDoc(doc(db, "days", props.docId), {
     users: tempUsers.splice(indexOfUserToDelete, 1),
   });
-
 }
 </script>
 <template>
@@ -27,16 +26,12 @@ const checkOut = async () => {
 
 <style scoped>
 .button {
-  margin-top: .5rem;
-  background-color: var(--clr-light-red);
-  border: 2px solid var(--clr-red);
-  border-radius: var(--border-radius);
-  font-size: 2rem;
+  --_btn-light-clr: var(--clr-light-red);
+  --_btn-dark-clr: var(--clr-red);
+
+  border-width: 2px;
   line-height: 1;
   color: white;
-}
-
-.button:hover {
-  background-color: var(--clr-red);
+  font-weight: bold;
 }
 </style>

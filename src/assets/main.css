@@ -112,4 +112,52 @@
     appearance: none;
     cursor: pointer;
     transition: all var(--transition-duration) var(--transition-timing);
+    background-color: rgb(var(--_btn-light-clr));
+    border: 1px solid var(--_btn-dark-clr);
+    border-radius: var(--border-radius);
+
+}
+/*
+.button.button--fat {
+    border-width: 2px;
+}
+*/
+
+
+.button.button--week {
+    margin-top: .5rem;
+    font-size: 2rem;
+    font-weight: bold;
+    border-radius: var(--border-radius);
+}
+
+.button.button--week:hover {
+    background-color: var(--_btn-dark-clr);
+}
+
+
+.button.button--month {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 900;
+    font-size: 1.5rem;
+    border-radius: var(--month-usr-border-radius);
+    background-color: rgba(var(--_btn-light-clr), .5);
+    opacity: .3;
+    width: var(--month-usr-size);
+    height: var(--month-usr-size);
+    border-style: dotted;
+}
+
+.button.button--month.mandatory {
+    opacity: .7;
+    background-color: rgba(var(--_btn-light-clr), 1);
+}
+
+.button.button--month:hover {
+    opacity: 1;
+    background-color: rgba(var(--_btn-light-clr), 1);
+
 }
