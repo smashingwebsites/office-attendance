@@ -52,10 +52,10 @@ const userISCheckedIn = computed(() => {
   return false;
 })
 
+const isCurrent = dateObject.toDateString() === new Date().toDateString();
 </script>
 <template>
-  <div class="day" :class="dayStatusClass">
-
+  <div class="day" :class="[{ ['current']: isCurrent}, dayStatusClass]">
     <div class="day__date">
       {{ formattedDate }}
     </div>
@@ -92,6 +92,10 @@ const userISCheckedIn = computed(() => {
   background-image: var(--_clr-state-gradient);
   border-radius: var(--border-radius-lg);
   color: var(--_clr-font, var(--clr-black));
+}
+
+.day.current {
+  border-color: var(--clr-black);
 }
 
 .day__date {

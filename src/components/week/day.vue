@@ -48,9 +48,14 @@ const userISCheckedIn = computed(() => {
   return false;
 })
 
+const isCurrent = computed(() => {
+  const today = new Date().toISOString().split('T')[0];
+  return props.day.date === today;
+})
+
 </script>
 <template>
-  <div class="day" :class="dayStatusClass">
+  <div class="day" :class="[{ ['current']: isCurrent}, dayStatusClass]">
     <div class="day__date">
       {{ day.date }} - {{ day.name }}
     </div>
@@ -77,6 +82,10 @@ const userISCheckedIn = computed(() => {
   flex-direction: column;
   gap: .25rem;
   width: 100%;
+}
+
+.day.current {
+  border-color: var(--clr-black);
 }
 
 .day__date {
