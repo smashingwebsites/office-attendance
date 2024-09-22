@@ -1,5 +1,5 @@
 <script setup>
-import {collection, doc, setDoc, updateDoc, arrayUnion, Timestamp} from "firebase/firestore";
+import {collection, doc, addDoc, updateDoc, arrayUnion, Timestamp} from "firebase/firestore";
 import {inject} from "vue";
 import {db} from "@/firebase";
 
@@ -8,7 +8,6 @@ const props = defineProps(['docId', 'user', 'dayIndex', 'dayTimestamp'])
 const userAddedHandler = inject('userAddedHandler');
 
 const checkIn = async () => {
-  userAddedHandler(props.dayIndex, props.docId, props.user.uid, props.user.displayName);
 
   if (props.docId) {
     await updateDoc(doc(db, "days", props.docId), {
@@ -19,14 +18,17 @@ const checkIn = async () => {
           }
       )
     });
+    userAddedHandler(props.dayIndex, props.docId, props.user.uid, props.user.displayName);
+
   } else {
-    await setDoc(doc(collection(db, 'days')), {
+    const docRef = await addDoc(collection(db, 'days'), {
       date: Timestamp.fromDate(new Date(props.dayTimestamp)),
       users: [{
         id: props.user.uid,
         name: props.user.displayName
       }]
     });
+    userAddedHandler(props.dayIndex, docRef.id, props.user.uid, props.user.displayName);
   }
 }
 </script>

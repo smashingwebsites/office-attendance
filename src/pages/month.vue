@@ -71,7 +71,6 @@ function handleUserAdded(dayIndex, docId, userId, userName) {
       name: userName
     })
   } else {
-    // todo: docId missing -
     daysInMonth.value[dayIndex].docId = docId;
     daysInMonth.value[dayIndex].users = [{
       id: userId,

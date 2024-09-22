@@ -64,13 +64,14 @@ async function getQueryDays() {
   }));
 }
 
-function handleUserAdded(dayIndex,docId, userId, userName) {
+function handleUserAdded(dayIndex, docId, userId, userName) {
   if (workweek.value[dayIndex].users) {
     workweek.value[dayIndex].users.push({
       id: userId,
       name: userName
     })
   } else {
+    workweek.value[dayIndex].docId = docId;
     workweek.value[dayIndex].users = [{
       id: userId,
       name: userName
