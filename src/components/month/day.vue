@@ -91,11 +91,11 @@ const isCurrent = dateObject.toDateString() === new Date().toDateString();
   background-color: var(--_clr-state, var(--clr-light-grey));
   background-image: var(--_clr-state-gradient);
   border-radius: var(--border-radius-lg);
-  color: var(--_clr-font, var(--clr-black));
+  color: var(--clr-text-status, var(--clr-text));
 }
 
 .day.current {
-  border-color: var(--clr-black);
+  border-color: var(--clr-dark);
 }
 
 .day__date {

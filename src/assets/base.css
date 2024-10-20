@@ -3,7 +3,7 @@
     --clr-opacity: .3;
     --clr-white: #f8f8f8;
 
-    --clr-black: #121227;
+    --clr-dark: #0a1c2a;
     --clr-grey: #d8e0e6;
     --clr-light-grey: #f1f1f1;
 
@@ -30,10 +30,19 @@
 
 /* semantic color variables for this project */
 :root {
-    --color-background: var(--clr-white);
-    --color-text: var(--clr-black);
+    --color-page-background: var(--clr-white);
+    --clr-text: var(--clr-dark);
 }
 
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-page-background: var(--clr-dark);
+        --clr-text: #d8e0e6;
+        --clr-grey: #545478;
+        --clr-light-grey: #2f2f56;
+        --clr-hightlight: #cc9900;
+    }
+}
 
 *,
 *::before,
@@ -45,8 +54,8 @@
 
 body {
     min-height: 100vh;
-    color: var(--color-text);
-    background: var(--color-background);
+    color: var(--clr-text);
+    background: var(--color-page-background);
     transition: color 0.5s, background-color 0.5s;
     line-height: 1.6;
     font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;

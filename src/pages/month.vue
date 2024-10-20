@@ -121,6 +121,6 @@ provide('userRemovedHandler', handleUserRemoved);
   background-color: var(--clr-light-grey);
   background-image: var(--_clr-state-gradient);*/
   border-radius: var(--border-radius-lg);
-  color: var(--clr-black);
+  color: var(--clr-text);
 }
 </style>

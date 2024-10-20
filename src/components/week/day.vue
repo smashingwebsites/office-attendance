@@ -48,6 +48,7 @@ const userISCheckedIn = computed(() => {
   return false;
 })
 
+// todo: not working correctly
 const isCurrent = computed(() => {
   const today = new Date().toISOString().split('T')[0];
   return props.day.date === today;
@@ -85,7 +86,7 @@ const isCurrent = computed(() => {
 }
 
 .day.current {
-  border-color: var(--clr-black);
+  border-color: var(--clr-dark);
 }
 
 .day__date {
@@ -97,7 +98,7 @@ const isCurrent = computed(() => {
   text-align: center;
   border-radius: var(--border-radius-lg);
   font-size: 1.1rem;
-  color: var(--_clr-font, var(--clr-black));
+  color: var(--clr-text);
   position: relative;
 }
 

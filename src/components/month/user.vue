@@ -19,7 +19,7 @@ const userInitials = computed(() => {
 </template>
 <style scoped>
 .user {
-  color: var(--clr-black);
+  color: var(--clr-text);
   position: relative;
   cursor: default;
 
