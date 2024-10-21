@@ -95,7 +95,28 @@ const isCurrent = dateObject.toDateString() === new Date().toDateString();
 }
 
 .day.current {
-  border-color: var(--clr-dark);
+  border-color: var(--clr-current);
+  scale: 1.06;
+  box-shadow:
+      0px 0px 2.2px rgba(0, 0, 0, 0.02),
+      0px 0px 5.3px rgba(0, 0, 0, 0.028),
+      0px 0px 10px rgba(0, 0, 0, 0.035),
+      0px 0px 17.9px rgba(0, 0, 0, 0.042),
+      0px 0px 33.4px rgba(0, 0, 0, 0.05),
+      0px 0px 80px rgba(0, 0, 0, 0.07)
+;
+}
+@media (prefers-color-scheme: dark) {
+  .day.current {
+    box-shadow:
+        0px 0px 2.2px rgba(255, 255, 255, 0.02),
+        0px 0px 5.3px rgba(255, 255, 255, 0.028),
+        0px 0px 10px rgba(255, 255, 255, 0.035),
+        0px 0px 17.9px rgba(255, 255, 255, 0.042),
+        0px 0px 33.4px rgba(255, 255, 255, 0.05),
+        0px 0px 80px rgba(255, 255, 255, 0.07)
+  ;
+  }
 }
 
 .day__date {

@@ -34,14 +34,20 @@ const userInitials = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  color: var(--clr-dark);
   transition: opacity var(--transition-duration) var(--transition-timing);
-  border: 1px solid var(--_clr-state, var(--clr-grey));;
+  border: 1px solid var(--_clr-state, var(--clr-grey));
   background-color: var(--clr-light-grey);
   border-radius: var(--month-usr-border-radius);
   width: var(--month-usr-size);
   height: var(--month-usr-size);
   opacity: .75;
+}
+
+@media (prefers-color-scheme: dark) {
+  .user .user__initials {
+    color: var(--clr-text);
+  }
 }
 
 .user .user__fullname {

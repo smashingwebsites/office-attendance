@@ -32,6 +32,7 @@
 :root {
     --color-page-background: var(--clr-white);
     --clr-text: var(--clr-dark);
+    --clr-current: var(--clr-dark);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -41,6 +42,7 @@
         --clr-grey: #545478;
         --clr-light-grey: #2f2f56;
         --clr-hightlight: #cc9900;
+        --clr-current: var(--clr-hightlight);
     }
 }
 
