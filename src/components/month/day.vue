@@ -9,9 +9,6 @@ import CheckoutButton from "@/components/checkout-button.vue";
 
 const props = defineProps(['day', 'dayIndex'])
 
-const dateObject = new Date(props.day.timestamp);
-
-const formattedDate = dateObject.toLocaleDateString('de-DE', {day: '2-digit', month: '2-digit'});
 const dayStatusClass = computed(() => {
   if (props.day.mandatory) {
     if (props.day.users) {
@@ -52,12 +49,12 @@ const userISCheckedIn = computed(() => {
   return false;
 })
 
-const isCurrent = dateObject.toDateString() === new Date().toDateString();
+const isCurrent = computed( () => new Date(props.day.timestamp).toDateString() === new Date().toDateString());
 </script>
 <template>
   <div class="day" :class="[{ ['current']: isCurrent}, dayStatusClass]">
     <div class="day__date">
-      {{ formattedDate }}
+      {{ day.date }}
     </div>
     <checkin-button v-if="userNOTCheckedIn"
                     :docId="day.docId"

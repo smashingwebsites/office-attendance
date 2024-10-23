@@ -29,7 +29,7 @@ async function getDaysInMonth() {
     }
 
     daysInMonth.value.push({
-      date: startOfMonthDateObj.toLocaleDateString(),
+      date: startOfMonthDateObj.toLocaleDateString('de-DE', {day: '2-digit', month: '2-digit'}),
       name: weekdays[startOfMonthDateObj.getDay() - 1],
       timestamp: startOfMonthDateObj.toString()
     });
@@ -39,7 +39,12 @@ async function getDaysInMonth() {
 
   userDays.forEach(userDay => {
     daysInMonth.value = daysInMonth.value.map(monthDay => {
-      if (monthDay.date === userDay.date) {
+
+      // auxiliary objects for date comparison
+      const monthDayDateObj = new Date(monthDay.timestamp)
+      const userDayDateObj = new Date(userDay.date)
+
+      if (monthDayDateObj.getTime() === userDayDateObj.getTime()) {
         monthDay.docId = userDay.id;
         monthDay.users = userDay.users;
         monthDay.mandatory = userDay.isMandatory;
@@ -56,7 +61,7 @@ async function getQueryDays() {
 
   return docSnap.docs.map((doc) => ({
     id: doc.id,
-    date: new Date(doc.data().date.seconds * 1000).toLocaleDateString(), // Convert seconds to milliseconds
+    date: new Date(doc.data().date.seconds * 1000), // Convert seconds to milliseconds
     users: doc.data().users,
     isMandatory: doc.data().mandatory
   }));
