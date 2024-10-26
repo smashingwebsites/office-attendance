@@ -11,8 +11,8 @@ const route = useRoute()
 const startOfWeek = computed(() => useDateOfWeek(store.currentDate, 1).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }));
 const endOfWeek = computed(() => useDateOfWeek(store.currentDate, 5).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: '2-digit' }));
 
-const nextWeek = computed(() => useNextWeek(store.currentDate))
-const prevWeek = computed(() => usePreviousWeek(store.currentDate))
+const nextWeek = computed(() => useNextWeek(useDateOfWeek(store.currentDate, 7)))
+const prevWeek = computed(() => usePreviousWeek(useDateOfWeek(store.currentDate, 7)))
 
 
 // Function to get the start date of a week.
