@@ -10,15 +10,15 @@ const daysInMonth = ref([])
 
 const weekdays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
 
-const startOfMonth = computed(() => new Date(store.currentDate.getFullYear(), store.currentDate.getMonth(), 1))
+const startOfMonth = computed(() => new Date(Date.UTC(store.currentDate.getFullYear(), store.currentDate.getMonth(), 1)))
 const endOfMonth = computed(() => new Date(store.currentDate.getFullYear(), store.currentDate.getMonth() + 1, 0))
 
 async function getDaysInMonth() {
   const startOfMonthDateObj = new Date(startOfMonth.value);
+  const endOfMonthDateObj = new Date(startOfMonthDateObj.getFullYear(), startOfMonthDateObj.getMonth() + 1, 0);
 
   daysInMonth.value = [];
-  const endOfMonth = new Date(startOfMonthDateObj.getFullYear(), startOfMonthDateObj.getMonth() + 1, 0);
-  const daysInTotal = endOfMonth.getDate();
+  const daysInTotal = endOfMonthDateObj.getDate();
 
   for (let i = 0; i < daysInTotal; i++) {
     startOfMonthDateObj.setDate(startOfMonth.value.getDate() + i);
@@ -40,11 +40,10 @@ async function getDaysInMonth() {
   userDays.forEach(userDay => {
     daysInMonth.value = daysInMonth.value.map(monthDay => {
 
-      // auxiliary objects for date comparison
+      // auxiliary object for date comparison
       const monthDayDateObj = new Date(monthDay.timestamp)
-      const userDayDateObj = new Date(userDay.date)
 
-      if (monthDayDateObj.getTime() === userDayDateObj.getTime()) {
+      if (monthDayDateObj.getTime() === userDay.date.getTime()) {
         monthDay.docId = userDay.id;
         monthDay.users = userDay.users;
         monthDay.mandatory = userDay.isMandatory;

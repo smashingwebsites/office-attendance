@@ -7,9 +7,10 @@
  * @return {Date} - A new date object with the offset applied.
  */
 export function useDateOfWeek(date, offset) {
-    return new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate() - date.getDay() + offset,
+    return new Date(Date.UTC(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate() - date.getDay() + offset,
+        )
     )
 }

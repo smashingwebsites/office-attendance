@@ -26,7 +26,7 @@ async function getDaysInWeek() {
       id: i,
       date: startOfWeekDateObj.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }),
       name: weekdays[i],
-      timestamp: startOfWeekDateObj.toString()
+      timestamp: startOfWeekDateObj.toUTCString()
     });
 
     startOfWeekDateObj.setDate(startOfWeekDateObj.getDate() + 1);
@@ -37,11 +37,10 @@ async function getDaysInWeek() {
   userDays.forEach(userDay => {
     workweek.value = workweek.value.map(weekDay => {
 
-      // auxiliary objects for date comparison
+      // auxiliary object for date comparison
       const weekDayDateObj = new Date(weekDay.timestamp)
-      const userDayDateObj = new Date(userDay.date)
 
-      if (weekDayDateObj.getTime() === userDayDateObj.getTime()) {
+      if (weekDayDateObj.getTime() === userDay.date.getTime()) {
         weekDay.docId = userDay.id;
         weekDay.users = userDay.users;
         weekDay.mandatory = userDay.isMandatory;
