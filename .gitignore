@@ -29,7 +29,6 @@ coverage
 # Firebase
 .firebaserc
 .firebase
-firebase.json
 firestore.indexes.json
 firestore.rules
 storage.rules
