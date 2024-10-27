@@ -16,7 +16,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Use the version of Node.js required by your project
+          node-version: '20'  # Use the version of Node.js required by your project
 
       - name: Install dependencies
         run: |
