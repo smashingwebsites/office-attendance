@@ -20,6 +20,8 @@ npm run build
 
 ## Deploy to Firebase
 https://firebase.google.com/docs/hosting
+
+Every Push to main Branch is deployed automatically.
 ```sh
 npm run build
 ```
