@@ -8,8 +8,10 @@ import week from '@/pages/week.vue'
 import month from '@/pages/month.vue'
 import account from '@/pages/account.vue'
 import stats from '@/pages/stats.vue'
+import days from '@/pages/day-settings.vue'
 import HeaderWeek from '@/components/header/week.vue'
 import HeaderMonth from '@/components/header/month.vue'
+import HeaderYear from '@/components/header/year.vue'
 
 // get the current year and week number for redirecting to the current week
 const currentYear = new Date().getFullYear();
@@ -21,20 +23,20 @@ const routes = [
     {
         path: '/',
         redirect: to => {
-            return { name: 'week', params: { week: currentWeek, year: currentYear } }
+            return {name: 'week', params: {week: currentWeek, year: currentYear}}
         },
     },
     {
         path: '/week',
         redirect: to => {
-            return { name: 'week', params: { week: currentWeek, year: currentYear } }
+            return {name: 'week', params: {week: currentWeek, year: currentYear}}
         },
     },
     {
         path: '/week/:year/:week',
         component: week,
         name: 'week',
-        meta: { type: 'week' },
+        meta: {type: 'week'},
         components: {
             default: week,
             dateNavigation: HeaderWeek
@@ -43,14 +45,14 @@ const routes = [
     {
         path: '/month',
         redirect: to => {
-            return { name: 'month', params: { month: currentMonth, year: currentYear } }
+            return {name: 'month', params: {month: currentMonth, year: currentYear}}
         },
     },
     {
         path: '/month/:year/:month',
         component: month,
         name: 'month',
-        meta: { type: 'month' },
+        meta: {type: 'month'},
         components: {
             default: month,
             dateNavigation: HeaderMonth
@@ -58,6 +60,14 @@ const routes = [
     },
     {path: '/account', component: account},
     {path: '/stats', component: stats},
+    {
+        path: '/days',
+        component: days,
+        components: {
+            default: days,
+            dateNavigation: HeaderYear
+        },
+    },
 ]
 
 const router = createRouter({

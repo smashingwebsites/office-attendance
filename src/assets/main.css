@@ -54,7 +54,7 @@
     hsl(153deg 49% 43%) 100%);
 }
 
-/* date navigation in Header for week and month view */
+/* date navigation in Header for week, month & day-settings view */
 .nav {
     --_block-padding: .5rem;
     --_inline-padding: .75rem;
@@ -92,6 +92,15 @@
     cursor: pointer;
     text-decoration: none;
     color: inherit;
+
+    /* button resets */
+    -webkit-appearance: none;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    appearance: none;
+    outline: none;
+    border: none;
 }
 
 .nav .nav__arrow:hover {

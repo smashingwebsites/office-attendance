@@ -88,7 +88,7 @@ const isCurrent = computed( () => new Date(props.day.timestamp).toDateString() =
   background-color: var(--_clr-state, var(--clr-light-grey));
   background-image: var(--_clr-state-gradient);
   border-radius: var(--border-radius-lg);
-  color: var(--clr-text-status, var(--clr-text));
+  color: var(--clr-text);
 }
 
 .day.current {
