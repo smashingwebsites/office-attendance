@@ -12,7 +12,7 @@ const daysRef = collection(db, 'days')
 const daysInMonth = ref([])
 
 const startOfMonth = computed(() => new Date(Date.UTC(store.currentYear, props.month, 1)))
-const endOfMonth = computed(() => new Date(store.currentYear, props.month + 1, 0))
+const endOfMonth = computed(() => new Date(Date.UTC(store.currentYear, props.month + 1, 0)))
 
 const startOfMonthDateObj = new Date(startOfMonth.value);
 const endOfMonthDateObj = new Date(endOfMonth.value);

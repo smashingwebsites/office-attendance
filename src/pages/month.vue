@@ -11,7 +11,7 @@ const daysInMonth = ref([])
 const weekdays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
 
 const startOfMonth = computed(() => new Date(Date.UTC(store.currentDate.getFullYear(), store.currentDate.getMonth(), 1)))
-const endOfMonth = computed(() => new Date(store.currentDate.getFullYear(), store.currentDate.getMonth() + 1, 0))
+const endOfMonth = computed(() => new Date(Date.UTC(store.currentDate.getFullYear(), store.currentDate.getMonth() + 1, 0)))
 
 async function getDaysInMonth() {
   const startOfMonthDateObj = new Date(startOfMonth.value);
