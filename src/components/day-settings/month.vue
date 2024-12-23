@@ -32,7 +32,8 @@ async function getDaysInMonth() {
 
     daysInMonth.value.push({
       date: startOfMonthDateObj.toLocaleDateString('de-DE', {day: 'numeric'}),
-      timestamp: startOfMonthDateObj.toString()
+      timestamp: startOfMonthDateObj.toString(),
+      dayNumber: startOfMonthDateObj.getDay()
     });
   }
 
@@ -68,12 +69,13 @@ async function getQueryDays() {
 }
 
 async function setMandatoryDaysInMonth(dayNumber) {
-  /*
-  * compare day number you get from firebase
-  * go through days in dayArray
-  * check if already holiday
-  * set days as mandatoy in DB and in view
-   */
+  daysInMonth.value.forEach((monthDay, index) => {
+
+    // Compare with the provided dayNumber
+    if (monthDay.dayNumber === dayNumber) {
+      toggleMandatoryState(index)
+    }
+  })
 }
 
 async function toggleMandatoryState(index) {
@@ -106,11 +108,11 @@ watch(() => store.currentYear, getDaysInMonth, {immediate: true});
     <h4 class="month-name">{{ startOfMonthDateObj.toLocaleDateString('de-DE', {month: 'long'}) }}</h4>
 
     <div class="days">
-      <h5 class="day-name">Mo</h5>
-      <h5 class="day-name">Di</h5>
-      <h5 class="day-name">Mi</h5>
-      <h5 class="day-name">Do</h5>
-      <h5 class="day-name">Fr</h5>
+      <h5 class="day-name" @click="setMandatoryDaysInMonth(1)">Mo</h5>
+      <h5 class="day-name" @click="setMandatoryDaysInMonth(2)">Di</h5>
+      <h5 class="day-name" @click="setMandatoryDaysInMonth(3)">Mi</h5>
+      <h5 class="day-name" @click="setMandatoryDaysInMonth(4)">Do</h5>
+      <h5 class="day-name" @click="setMandatoryDaysInMonth(5)">Fr</h5>
       <div v-if="(startOfMonth.getDay() > 1) && (startOfMonth.getDay() < 6)" v-for="i in startOfMonth.getDay()-1"
            :key="i"><!-- Fill empty days at the start of a month with empty objects --></div>
       <Day v-for="(day, index) in daysInMonth" :day="day" :key="index"
@@ -139,5 +141,13 @@ watch(() => store.currentYear, getDaysInMonth, {immediate: true});
 .day-name {
   font-weight: bold;
   text-align: center;
+  cursor: pointer;
+  width: 100%;
+  line-height: 2;
+  transition: color var(--transition-duration) var(--transition-timing);
+}
+
+.day-name:hover {
+  color: var(--clr-hightlight);
 }
 </style>
